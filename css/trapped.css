@@ -1,0 +1,185 @@
+/* ================================
+   TRAPPED.CSS — Immersive Trap Mode
+   Psychological discomfort effects
+   ================================ */
+
+/* ---- Return overlay (shown when user leaves tab/focus) ---- */
+#trap-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  cursor: default;
+  user-select: none;
+  /* Animated background — shifts between stages */
+  background: rgba(0, 0, 0, 0.92);
+  animation: trapBgPulse 2s ease-in-out infinite;
+}
+
+#trap-overlay.show {
+  display: flex;
+}
+
+/* Stage 3 version — yellow-tinted */
+#trap-overlay.stage3-mode {
+  background: rgba(20, 16, 0, 0.95);
+  border: 2px solid rgba(245, 200, 66, 0.2);
+}
+
+/* Stage 4 version — red-tinted */
+#trap-overlay.stage4-mode {
+  background: rgba(20, 0, 0, 0.96);
+  border: 2px solid rgba(255, 0, 0, 0.15);
+}
+
+@keyframes trapBgPulse {
+  0%, 100% { backdrop-filter: blur(4px); }
+  50%       { backdrop-filter: blur(6px); }
+}
+
+/* ---- Overlay primary message ---- */
+#trap-main-msg {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(22px, 4vw, 40px);
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  animation: trapMsgGlitch 3s ease-in-out infinite;
+}
+
+#trap-overlay.stage3-mode #trap-main-msg {
+  color: var(--backrooms-yellow, #f5c842);
+}
+#trap-overlay.stage4-mode #trap-main-msg {
+  color: #ff3333;
+}
+
+@keyframes trapMsgGlitch {
+  0%, 90%, 100% { transform: translate(0, 0); opacity: 1; }
+  92%           { transform: translate(-2px, 1px); opacity: 0.85; }
+  94%           { transform: translate(2px, -1px); opacity: 1; }
+  96%           { transform: translate(-1px, 0); opacity: 0.9; }
+}
+
+/* ---- Overlay secondary message ---- */
+#trap-sub-msg {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(12px, 1.8vw, 16px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 32px;
+}
+#trap-overlay.stage3-mode #trap-sub-msg { color: #a08820; }
+#trap-overlay.stage4-mode #trap-sub-msg { color: #aa4444; }
+
+/* ---- "We saw you" notification line ---- */
+#trap-saw-msg {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 2px;
+  margin-top: 24px;
+  min-height: 20px;
+}
+
+/* ---- Return button (optional, subtle) ---- */
+#trap-return-hint {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 3px;
+  margin-top: 40px;
+  animation: trapReturnBlink 2s step-end infinite;
+}
+@keyframes trapReturnBlink {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.05; }
+}
+
+/* ---- Fullscreen warning banner ---- */
+#fullscreen-warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #2a2200, #3a2f00, #2a2200);
+  color: var(--backrooms-yellow, #f5c842);
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  text-align: center;
+  z-index: 4800;
+  display: none;
+  border-bottom: 1px solid rgba(245,200,66,0.3);
+  animation: warnFlicker 4s ease-in-out infinite;
+}
+#fullscreen-warning.show { display: block; }
+
+@keyframes warnFlicker {
+  0%, 100% { opacity: 1; }
+  45%       { opacity: 0.8; }
+  50%       { opacity: 0.3; }
+  55%       { opacity: 0.9; }
+}
+
+/* ---- Stage 4: heavier CRT flicker after 3 wrong attempts ---- */
+#stage4.heavy-flicker {
+  animation:
+    terminalGlitch 4s ease-in-out infinite,
+    heavyCRTFlicker 0.8s ease-in-out infinite !important;
+}
+@keyframes heavyCRTFlicker {
+  0%, 100% { filter: brightness(1) contrast(1); }
+  10%      { filter: brightness(0.4) contrast(1.4); }
+  12%      { filter: brightness(1.2) contrast(1); }
+  50%      { filter: brightness(0.8) contrast(1.2); }
+  52%      { filter: brightness(1) contrast(1); }
+  80%      { filter: brightness(0.6) contrast(1.5); }
+  82%      { filter: brightness(1) contrast(1); }
+}
+
+/* ---- Stage 4: wrong password input lock ---- */
+#s4-password-input.locked {
+  opacity: 0.4;
+  pointer-events: none;
+  border-bottom-color: rgba(255, 0, 0, 0.5);
+}
+#s4-enter-btn.locked {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ---- Dimmer overlay (screen dims when user returns) ---- */
+#trap-dim-flash {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  z-index: 4900;
+  transition: background 0.1s;
+}
+#trap-dim-flash.flash-in {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* ---- "Unstable" warning for Stage 4 (3+ wrong attempts) ---- */
+#s4-unstable-warning {
+  display: none;
+  color: #ff3333;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  animation: trapMsgGlitch 2s ease-in-out infinite;
+}
+#s4-unstable-warning.show { display: block; }

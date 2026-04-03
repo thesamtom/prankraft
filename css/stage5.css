@@ -1,0 +1,233 @@
+/* ================================
+   STAGE5.CSS — The Escape / April Fools Reveal
+   Clean, modern, celebratory
+   ================================ */
+
+#stage5 {
+  background: var(--celebrate-bg);
+  min-height: 100vh;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  color: var(--celebrate-text);
+  position: relative;
+  overflow: hidden;
+  animation: glitchTear 1s ease-out 1;
+}
+
+/* Floating particles background */
+#s5-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0.5;
+}
+
+/* Confetti canvas */
+#s5-confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ---- Main layout ---- */
+#s5-content {
+  position: relative;
+  z-index: 10;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  text-align: center;
+  animation: fadeIn 1s ease 0.5s both;
+}
+
+/* Top badge */
+#s5-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--celebrate-blue), var(--celebrate-accent));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+  animation: fadeIn 0.8s ease 0.8s both;
+}
+
+/* Main title */
+#s5-title {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  color: var(--celebrate-text);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  animation: fadeIn 0.8s ease 1s both;
+}
+
+/* Escape emoji */
+#s5-emoji {
+  font-size: clamp(40px, 7vw, 72px);
+  display: block;
+  margin-bottom: 12px;
+  animation: fadeIn 0.8s ease 1.2s both;
+}
+
+/* Subtext */
+#s5-subtext {
+  font-size: clamp(14px, 2vw, 17px);
+  color: #4a5568;
+  line-height: 1.8;
+  margin-bottom: 32px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.8s ease 1.4s both;
+}
+
+/* Escape time display */
+#s5-time-display {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a1a2e, var(--celebrate-blue));
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: bold;
+  padding: 14px 32px;
+  border-radius: 8px;
+  margin-bottom: 36px;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 24px rgba(25, 102, 179, 0.3);
+  animation: fadeIn 0.8s ease 1.6s both;
+}
+#s5-timer-value {
+  color: var(--celebrate-gold);
+}
+
+/* ---- Certificate ---- */
+#s5-certificate {
+  background: #fffdf5;
+  border: 3px solid var(--celebrate-gold);
+  border-radius: 4px;
+  padding: 32px 36px;
+  margin: 0 auto 40px;
+  max-width: 580px;
+  position: relative;
+  box-shadow:
+    0 0 0 6px rgba(245,200,66,0.15),
+    0 16px 48px rgba(0,0,0,0.08);
+  animation: certReveal 0.8s cubic-bezier(0.34,1.56,0.64,1) 2s both;
+}
+
+/* Certificate decorative corners */
+#s5-certificate::before,
+#s5-certificate::after {
+  content: '✦';
+  position: absolute;
+  color: var(--celebrate-gold);
+  font-size: 22px;
+  opacity: 0.5;
+}
+#s5-certificate::before { top: 10px; left: 14px; }
+#s5-certificate::after  { bottom: 10px; right: 14px; }
+
+#s5-cert-title {
+  font-family: 'Newsreader', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--celebrate-blue);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  border-bottom: 2px solid var(--celebrate-gold);
+  padding-bottom: 8px;
+}
+#s5-cert-subtitle {
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+#s5-cert-body {
+  font-family: 'Newsreader', serif;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+#s5-cert-id {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: var(--celebrate-blue);
+  font-weight: bold;
+}
+#s5-cert-seal {
+  font-size: 40px;
+  margin-top: 12px;
+  filter: drop-shadow(0 2px 6px rgba(245,200,66,0.4));
+}
+
+/* ---- CTA Button ---- */
+#s5-share-btn {
+  background: linear-gradient(135deg, var(--celebrate-blue), var(--celebrate-accent));
+  color: #fff;
+  border: none;
+  padding: 14px 36px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 24px rgba(25,102,179,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeIn 0.8s ease 2.4s both;
+  margin-bottom: 12px;
+}
+#s5-share-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 32px rgba(25,102,179,0.45);
+  animation: btnBounce 0.4s ease 1;
+}
+
+/* ---- Branding footer ---- */
+#s5-footer {
+  background: #1a1a2e;
+  color: #ccc;
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  position: relative;
+  z-index: 10;
+}
+#s5-footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--celebrate-gold);
+  margin-bottom: 4px;
+}
+#s5-footer-sub {
+  font-size: 12px;
+  color: #8899cc;
+  letter-spacing: 1px;
+}
+
+/* Horizontal decorative line */
+.s5-divider {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--celebrate-blue), var(--celebrate-gold));
+  border-radius: 2px;
+  margin: 20px auto;
+  animation: fadeIn 0.8s ease 1.8s both;
+}

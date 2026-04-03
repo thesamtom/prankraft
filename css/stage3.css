@@ -1,0 +1,174 @@
+/* ================================
+   STAGE3.CSS — Backrooms Takeover
+   The endless yellow. Level 0.
+   ================================ */
+
+#stage3 {
+  background-color: var(--backrooms-yellow);
+  background-image:
+    /* Moist carpet texture simulation */
+    repeating-linear-gradient(45deg,
+      rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px,
+      transparent 1px, transparent 8px),
+    repeating-linear-gradient(-45deg,
+      rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px,
+      transparent 1px, transparent 6px),
+    repeating-linear-gradient(90deg,
+      rgba(100,80,0,0.04) 0px, rgba(100,80,0,0.04) 1px,
+      transparent 1px, transparent 12px);
+  background-size: 200px 200px;
+  animation:
+    fluorescentFlicker 4s ease-in-out infinite,
+    bgTextureDrift 60s linear infinite,
+    pageBreath 6s ease-in-out infinite,
+    pageTilt 1.5s ease-out 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT overlay on yellow */
+#stage3::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.04) 0px,
+    rgba(0,0,0,0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Shadow entity in corner */
+#s3-shadow-entity {
+  position: fixed;
+  bottom: 8%;
+  right: 5%;
+  width: 80px;
+  height: 200px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, transparent 70%);
+  animation: shadowDrift 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Distortion bar */
+#s3-distortion-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,0,0.8) 20%,
+    rgba(255,200,0,1) 50%,
+    rgba(200,150,0,0.8) 80%,
+    transparent 100%
+  );
+  mix-blend-mode: difference;
+  animation: distortionBar 12s linear infinite;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Entity text in corners */
+.s3-entity-text {
+  position: fixed;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: rgba(0,0,0,0.15);
+  pointer-events: none;
+  z-index: 6;
+  letter-spacing: 2px;
+}
+#s3-entity-tl { top: 12px; left: 12px; }
+#s3-entity-tr { top: 12px; right: 12px; }
+#s3-entity-bl { bottom: 40px; left: 12px; }
+#s3-entity-br { bottom: 40px; right: 12px; }
+
+/* ---- Main text area ---- */
+#s3-content {
+  position: relative;
+  z-index: 15;
+  max-width: 680px;
+  width: 90%;
+  text-align: left;
+  padding: 20px;
+}
+
+.s3-line {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  color: var(--backrooms-dark);
+  line-height: 1.9;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  min-height: 1.9em;
+}
+.s3-line.visible {
+  opacity: 1;
+}
+.s3-line.bold-line {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1400;
+}
+.s3-line.dim-line {
+  opacity: 0; /* overridden when .visible */
+  color: rgba(42, 34, 0, 0.6);
+  font-size: 14px;
+}
+.s3-line.dim-line.visible {
+  opacity: 0.6;
+}
+
+/* "ACCESS THE TERMINAL" button */
+#s3-terminal-btn {
+  display: none;
+  margin-top: 28px;
+  background: var(--backrooms-dark);
+  color: var(--backrooms-yellow);
+  border: 2px solid var(--backrooms-dark);
+  padding: 12px 28px;
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  animation: fadeIn 0.8s ease forwards;
+  position: relative;
+  z-index: 16;
+}
+#s3-terminal-btn:hover {
+  background: #000;
+  color: #ffff00;
+}
+
+/* Random blur pop */
+#stage3.blur-pop {
+  animation:
+    fluorescentFlicker 4s ease-in-out infinite,
+    blurPop 8s ease-in-out infinite,
+    pageBreath 6s ease-in-out infinite;
+}
+
+/* Brightness pulse overlay */
+#s3-pulse-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--backrooms-yellow);
+  pointer-events: none;
+  z-index: 8;
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: randomPulse 7s ease-in-out infinite;
+}

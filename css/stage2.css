@@ -1,0 +1,243 @@
+/* ================================
+   STAGE2.CSS — Something Feels Wrong
+   Subtle glitches + broken form
+   ================================ */
+
+#stage2 {
+  background-color: #cec8a8; /* very slightly more yellow than Stage 1 */
+  font-family: 'Times New Roman', Times, serif;
+  color: var(--gov-text);
+  /* Very subtle ongoing brightness fluctuation */
+  animation: brightnessShift 12s ease-in-out infinite;
+}
+
+/* Reuse Stage 1 nav styling */
+#s2-marquee-wrap {
+  background: var(--gov-navy);
+  color: #ffff00;
+  font-size: 13px;
+  font-family: 'Courier New', monospace;
+  padding: 4px 0;
+  overflow: hidden;
+  border-bottom: 2px solid var(--gov-yellow);
+  white-space: nowrap;
+}
+#s2-marquee {
+  display: inline-block;
+  animation: marqueeScroll 20s linear infinite;
+}
+
+#s2-header {
+  background: var(--gov-navy);
+  border-bottom: 4px double var(--gov-yellow);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+#s2-header h1 {
+  color: #fff;
+  font-size: 18px;
+  font-family: 'Times New Roman', serif;
+}
+#s2-header p {
+  color: var(--gov-yellow);
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+#s2-nav {
+  background: #a0a088;
+  border-bottom: 2px inset #808070;
+  display: flex;
+  flex-wrap: wrap;
+}
+#s2-nav a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--gov-navy);
+  text-decoration: none;
+  border-right: 1px solid #808070;
+}
+#s2-nav a:hover { text-decoration: underline; }
+
+/* Drifting nav link */
+#s2-nav-drift {
+  transition: margin-left 6s ease-in-out;
+}
+
+/* ---- Form Container ---- */
+#s2-form-wrap {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 16px;
+}
+
+/* Glitchy form header */
+#s2-form-title {
+  background: var(--gov-navy);
+  color: #fff;
+  padding: 8px 14px;
+  font-size: 16px;
+  border: 2px outset #c0c0c0;
+  margin-bottom: 2px;
+}
+#s2-form-subtitle {
+  background: #d4cdb0;
+  border: 2px inset #b0a890;
+  border-top: none;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 14px;
+}
+
+/* Status bar — subtly wrong */
+#s2-status-bar {
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  color: #666;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+#s2-status-bar span { border-right: 1px solid #aaa; padding-right: 16px; }
+#s2-status-bar span:last-child { border-right: none; }
+#s2-doc-status { color: #cc4400; }
+
+/* Random image that drifts slightly */
+#s2-gov-img {
+  float: right;
+  margin: 0 0 10px 14px;
+  border: 2px inset #aaa;
+  width: 120px;
+  height: 90px;
+  background: #b8b0a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #666;
+  text-align: center;
+  animation: imgDrift 15s ease-in-out infinite;
+  position: relative;
+}
+
+/* ---- The Form ---- */
+#s2-benefit-form {
+  background: #e8e5cd;
+  border: 2px inset #b0a890;
+  padding: 16px;
+}
+
+.s2-field-group {
+  margin-bottom: 14px;
+}
+.s2-field-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: var(--gov-navy);
+}
+.s2-field-group input,
+.s2-field-group select {
+  width: 100%;
+  padding: 5px 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  border: 2px inset #b0a890;
+  background: #faf8f0;
+  color: #222;
+}
+.s2-field-group input:focus,
+.s2-field-group select:focus {
+  outline: 2px solid var(--gov-navy);
+}
+
+/* Text that occasionally vanishes */
+#s2-vanish-text {
+  animation: textVanish 18s ease-in-out infinite;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+/* Checkbox + declaration */
+#s2-checkbox-group {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+#s2-checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin-top: 2px;
+}
+#s2-checkbox-group label {
+  font-size: 13px;
+  color: #333;
+}
+
+/* Submit button — moves on hover */
+#s2-submit-btn {
+  background: var(--gov-navy);
+  color: #fff;
+  border: 3px outset #4040a0;
+  padding: 8px 24px;
+  font-family: 'Times New Roman', serif;
+  font-size: 15px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.25s ease;
+  position: relative;
+}
+#s2-submit-btn:active { border-style: inset; }
+/* JS sets --drift-x, --drift-y custom props on hover */
+#s2-submit-btn.drifting {
+  transform: translate(var(--drift-x, 0px), var(--drift-y, 0px));
+  transition: transform 0.3s ease;
+}
+
+/* Clock that flickers */
+#s2-clock {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #888;
+  animation: clockFlicker 20s ease-in-out infinite;
+  margin-top: 8px;
+}
+
+/* ---- Footer ---- */
+#s2-footer {
+  background: var(--gov-navy);
+  border-top: 4px double var(--gov-yellow);
+  padding: 10px 20px;
+  font-size: 10px;
+  color: #666;
+  font-family: 'Courier New', monospace;
+}
+
+/* Legal text that briefly becomes unreadable */
+#s2-footer-legal {
+  font-size: 10px;
+  color: #666;
+  line-height: 1.6;
+}
+#s2-footer-legal.unreadable {
+  filter: blur(1.5px);
+  color: transparent;
+  text-shadow: 0 0 8px #666;
+  transition: all 0.15s;
+}
+
+/* CLUE 2 — marquee "ROOMS" word */
+#clue-word-rooms {
+  display: none; /* shown/hidden by JS at key moment */
+  color: #ffff00;
+  font-weight: bold;
+}

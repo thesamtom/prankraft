@@ -1,0 +1,149 @@
+/* ================================
+   BASE.CSS — Reset + CSS Variables
+   GOVNET Backrooms Escape
+   ================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,700;1,400&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Stage 1 — Retro Gov */
+  --gov-beige: #d4c9a8;
+  --gov-grey: #b8b8a0;
+  --gov-navy: #00003c;
+  --gov-navy-mid: #000080;
+  --gov-text: #1b1c13;
+  --gov-link: #0000cc;
+  --gov-link-visited: #551a8b;
+  --gov-bg: #c8c5ad;
+  --gov-border: #808070;
+  --gov-yellow: #fdcf49;
+
+  /* Stage 3 — Backrooms */
+  --backrooms-yellow: #f5c842;
+  --backrooms-dark: #2a2200;
+  --backrooms-dim: #8a7a00;
+
+  /* Stage 4 — Terminal */
+  --terminal-bg: #0a0a0a;
+  --terminal-green: #00ff41;
+  --terminal-green-dim: #00b32c;
+  --terminal-red: #ff0000;
+  --terminal-amber: #ffb000;
+
+  /* Stage 5 — Celebration */
+  --celebrate-bg: #f0f4ff;
+  --celebrate-blue: #1966b3;
+  --celebrate-accent: #4f80ff;
+  --celebrate-gold: #f5c842;
+  --celebrate-text: #0d1b3e;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* All stages hidden by default.
+   Using :not(.active) with !important so that stage-specific
+   display:flex rules (stage3, stage4) cannot override hiding. */
+section.stage:not(.active) {
+  display: none !important;
+}
+
+section.stage {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* stage3 and stage4 override display via their own CSS to flex —
+   so we must ensure .active doesn't lock them to block */
+section.stage.active {
+  display: block; /* overridden by stage3/4 to flex when active */
+}
+
+/* ---- Utility classes ---- */
+.hidden { display: none !important; }
+.invisible { visibility: hidden; }
+
+.glitch-text {
+  position: relative;
+}
+
+/* Popup overlay */
+#popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+#popup-overlay.show {
+  display: flex;
+}
+#popup-box {
+  background: var(--gov-beige);
+  border: 3px solid var(--gov-navy);
+  padding: 0;
+  max-width: 380px;
+  width: 90%;
+  font-family: 'Times New Roman', serif;
+  box-shadow: 4px 4px 0 #000;
+  animation: popupFadeIn 0.15s ease;
+}
+#popup-titlebar {
+  background: var(--gov-navy);
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+#popup-close {
+  background: #c0c0c0;
+  border: 1px outset #fff;
+  font-size: 11px;
+  padding: 1px 5px;
+  cursor: pointer;
+  font-family: 'Times New Roman', serif;
+}
+#popup-body {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--gov-text);
+  line-height: 1.5;
+}
+#popup-btn {
+  display: block;
+  margin: 8px auto 4px;
+  background: var(--gov-beige);
+  border: 2px outset #fff;
+  padding: 4px 20px;
+  font-family: 'Times New Roman', serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+#popup-btn:active { border-style: inset; }
+
+/* Screen flash overlay */
+#flash-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.05s;
+}
+#flash-overlay.red  { background: #ff0000; opacity: 0.35; }
+#flash-overlay.black { background: #000000; opacity: 1; }
+#flash-overlay.white { background: #ffffff; opacity: 0.9; }

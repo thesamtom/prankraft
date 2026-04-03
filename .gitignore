@@ -1,0 +1,7 @@
+.stitch/
+.gemini/
+.DS_Store
+node_modules/
+dist/
+build/
+*.log

@@ -1,0 +1,246 @@
+/* ================================
+   ANIMATIONS.CSS — All Keyframes
+   GOVNET Backrooms Escape
+   ================================ */
+
+/* Marquee scroll */
+@keyframes marqueeScroll {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Visitor counter tick */
+@keyframes counterPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* Win95 popup fade in */
+@keyframes popupFadeIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Subtle footer flicker */
+@keyframes footerFlicker {
+  0%, 96%, 98%, 100% { opacity: 1; }
+  97%                { opacity: 0.15; }
+}
+
+/* Tiny screen jitter — Stage 1 */
+@keyframes screenJitter {
+  0%, 100%  { transform: translate(0,0); }
+  10%       { transform: translate(-1px, 1px); }
+  20%       { transform: translate(1px, -1px); }
+  30%       { transform: translate(-1px, 0); }
+  40%       { transform: translate(1px, 1px); }
+  50%       { transform: translate(0, -1px); }
+  60%       { transform: translate(-1px, 1px); }
+  70%       { transform: translate(1px, 0); }
+  80%       { transform: translate(-1px, -1px); }
+  90%       { transform: translate(1px, 1px); }
+}
+.jitter { animation: screenJitter 0.3s steps(1) 1; }
+
+/* Image pixel drift — Stage 2 */
+@keyframes imgDrift {
+  0%, 90%, 100% { transform: translate(0,0); }
+  92%           { transform: translate(2px, -3px); }
+  94%           { transform: translate(-2px, 2px); }
+  96%           { transform: translate(3px, 0px); }
+}
+
+/* Text disappear — Stage 2 */
+@keyframes textVanish {
+  0%, 85%, 100% { opacity: 1; }
+  87%, 93%     { opacity: 0; }
+}
+
+/* Submit button drift on hover */
+@keyframes btnDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(8px, -5px); }
+}
+
+/* Brightness shift — Stage 2 */
+@keyframes brightnessShift {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(0.93); }
+}
+
+/* Clock flicker */
+@keyframes clockFlicker {
+  0%, 89%, 95%, 100% { opacity: 1; }
+  90%, 94%           { opacity: 0; }
+}
+
+/* Form field shake */
+@keyframes fieldShake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-4px); }
+  30%      { transform: translateX(4px); }
+  45%      { transform: translateX(-3px); }
+  60%      { transform: translateX(3px); }
+  75%      { transform: translateX(-2px); }
+  90%      { transform: translateX(2px); }
+}
+.shake { animation: fieldShake 0.4s ease 1; }
+
+/* ---- STAGE 3 — Backrooms ---- */
+
+/* Fluorescent flicker */
+@keyframes fluorescentFlicker {
+  0%, 100%      { filter: brightness(1); }
+  2%            { filter: brightness(0.6); }
+  4%            { filter: brightness(1); }
+  6%            { filter: brightness(0.7); }
+  8%            { filter: brightness(1); }
+  50%           { filter: brightness(1); }
+  51%           { filter: brightness(0.5); }
+  52%           { filter: brightness(1); }
+  80%           { filter: brightness(0.85); }
+  82%           { filter: brightness(1); }
+}
+
+@keyframes pageBreath {
+  0%, 100% { transform: scale(1);     filter: brightness(1); }
+  50%      { transform: scale(1.003); filter: brightness(1.05); }
+}
+
+@keyframes randomPulse {
+  0%, 40%, 100% { filter: brightness(1); }
+  42%           { filter: brightness(1.3); }
+  44%           { filter: brightness(0.8); }
+  46%           { filter: brightness(1.1); }
+}
+
+@keyframes blurPop {
+  0%, 80%, 100% { filter: blur(0px); }
+  85%, 95%      { filter: blur(1.5px); }
+}
+
+@keyframes bgTextureDrift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 200px 200px; }
+}
+
+@keyframes distortionBar {
+  0%   { top: -10%; opacity: 0; }
+  5%   { opacity: 0.7; }
+  15%  { top: 110%; opacity: 0; }
+  100% { top: 110%; opacity: 0; }
+}
+
+/* Shadow entity drift */
+@keyframes shadowDrift {
+  0%, 70%, 100% { opacity: 0; transform: translate(0,0); }
+  75%           { opacity: 0.08; transform: translate(-10px, 5px); }
+  80%           { opacity: 0.12; }
+  85%           { opacity: 0.06; transform: translate(5px, -5px); }
+  90%           { opacity: 0; }
+}
+
+/* Page tilt on stage 3 enter */
+@keyframes pageTilt {
+  0%   { transform: rotate(0deg) scale(1); }
+  15%  { transform: rotate(-1.5deg) scale(0.98); }
+  30%  { transform: rotate(1deg) scale(0.99); }
+  45%  { transform: rotate(-0.5deg) scale(1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ---- STAGE 4 — Terminal ---- */
+
+/* CRT scanlines move */
+@keyframes scanlines {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 4px; }
+}
+
+/* Cursor blink */
+@keyframes cursorBlink {
+  0%, 49%  { opacity: 1; }
+  50%, 100%{ opacity: 0; }
+}
+
+/* Green phosphor glow pulse */
+@keyframes phosphorGlow {
+  0%, 100% { text-shadow: 0 0 5px var(--terminal-green), 0 0 10px var(--terminal-green); }
+  50%      { text-shadow: 0 0 8px var(--terminal-green), 0 0 20px var(--terminal-green), 0 0 35px #00ff4155; }
+}
+
+/* Terminal text glitch — 1 frame */
+@keyframes terminalGlitch {
+  0%, 97%, 100% { transform: translate(0,0); filter: none; }
+  98%           { transform: translate(2px,-1px); filter: hue-rotate(90deg); }
+}
+
+/* Red flash on wrong password */
+@keyframes redFlash {
+  0%   { background: rgba(255,0,0,0.25); }
+  50%  { background: rgba(255,0,0,0.4); }
+  100% { background: rgba(255,0,0,0); }
+}
+
+/* Static burst transition */
+@keyframes staticBurst {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ---- STAGE 5 — Celebration ---- */
+
+/* Glitch tear in */
+@keyframes glitchTear {
+  0%   { clip-path: inset(0 0 100% 0); filter: hue-rotate(0deg); }
+  20%  { clip-path: inset(0 0 70% 0);  filter: hue-rotate(180deg); }
+  40%  { clip-path: inset(0 0 40% 0);  filter: hue-rotate(90deg); }
+  60%  { clip-path: inset(0 0 15% 0);  filter: hue-rotate(45deg); }
+  80%  { clip-path: inset(0 0 2% 0);   filter: hue-rotate(0deg); }
+  100% { clip-path: inset(0 0 0% 0);   filter: none; }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Certificate reveal */
+@keyframes certReveal {
+  from { opacity: 0; transform: scale(0.8) rotate(-2deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Button bounce */
+@keyframes btnBounce {
+  0%, 100% { transform: scale(1) translateY(0); }
+  30%      { transform: scale(1.05) translateY(-3px); }
+  60%      { transform: scale(0.98) translateY(1px); }
+}
+
+/* Floating particles */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  50%      { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+}
+
+/* Confetti fall */
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* Under construction GIF blink */
+@keyframes constructionBlink {
+  0%, 100% { opacity: 1; }
+  45%, 55% { opacity: 0.4; }
+}
+
+/* Tiny link drift */
+@keyframes linkDrift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(5px); }
+}
