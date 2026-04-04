@@ -241,3 +241,45 @@
   opacity: 1;
   pointer-events: all;
 }
+
+/* ═══════════════════════════════════
+   ON-SCREEN MOBILE D-PAD
+   ═══════════════════════════════════ */
+#s5-dpad {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 150px;
+  height: 150px;
+  z-index: 500;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 6px;
+  pointer-events: all;
+}
+#s5-dpad .dbtn {
+  background: rgba(0,255,65,0.15);
+  border: 1px solid rgba(0,255,65,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0,255,65,0.8);
+  font-size: 22px;
+  user-select: none;
+  opacity: 0.7;
+  transition: opacity 0.05s, transform 0.05s, background 0.05s;
+  border-radius: 4px;
+}
+#s5-dpad .dbtn:active,
+#s5-dpad .dbtn.active {
+  opacity: 1;
+  transform: scale(0.92);
+  background: rgba(0,255,65,0.4);
+  color: #fff;
+  border-color: #00ff41;
+}
+.d-up    { grid-column: 2; grid-row: 1; text-align: center; }
+.d-down  { grid-column: 2; grid-row: 3; text-align: center; }
+.d-left  { grid-column: 1; grid-row: 2; text-align: right; }
+.d-right { grid-column: 3; grid-row: 2; text-align: left; }

@@ -762,6 +762,44 @@ document.addEventListener('keydown', onKeyDown);
 document.addEventListener('keyup', onKeyUp);
 
 /* ═══════════════════════════════════════
+   TOUCH CONTROLS (D-PAD)
+   ═══════════════════════════════════════ */
+function setupMobileControls() {
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (!isTouch) return;
+  if (document.getElementById('s5-dpad')) return;
+
+  const dpadWrap = document.createElement('div');
+  dpadWrap.id = 's5-dpad';
+  dpadWrap.innerHTML = `
+    <div class="dbtn d-up" data-k="ArrowUp"></div>
+    <div class="dbtn d-left" data-k="ArrowLeft"></div>
+    <div class="dbtn d-right" data-k="ArrowRight"></div>
+    <div class="dbtn d-down" data-k="ArrowDown"></div>
+  `;
+  document.getElementById('stage5').appendChild(dpadWrap);
+
+  const btns = dpadWrap.querySelectorAll('.dbtn');
+  btns.forEach(b => {
+    b.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      keysDown[b.getAttribute('data-k')] = true;
+      b.classList.add('active');
+    });
+    b.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      keysDown[b.getAttribute('data-k')] = false;
+      b.classList.remove('active');
+    });
+    b.addEventListener('touchcancel', (e) => {
+      e.preventDefault();
+      keysDown[b.getAttribute('data-k')] = false;
+      b.classList.remove('active');
+    });
+  });
+}
+
+/* ═══════════════════════════════════════
    GAME LOOP
    ═══════════════════════════════════════ */
 
@@ -926,7 +964,7 @@ function showRulesScreen() {
   let scrollY = 0;
   
   function scrollStep() {
-    scrollY -= 1.2; // Tweak speed for readability
+    scrollY -= 0.6; // Halved the speed for readability
     textDiv.style.transform = `translateY(${scrollY}px)`;
     
     // Use getBoundingClientRect to check if fully scrolled past the top
@@ -971,6 +1009,9 @@ function initStage5() {
 
   currentLevel = 0;
   totalStartTime = 0;
+
+  // Setup mobile controls if needed
+  setupMobileControls();
 
   // Show rules screen
   showRulesScreen();
