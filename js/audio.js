@@ -211,8 +211,28 @@ function playCelebrate(ctx) {
   });
 }
 
-// ---- Expose globally ----
-window.playAudio = playAudio;
+// Global Trap Surge Hum (for Stages 3-6)
+let trapOsc = null;
+let trapGain = null;
+
+function setTrapIntensity(intensity) {
+  const ctx = getCtx();
+  if (!trapOsc) {
+    trapOsc = ctx.createOscillator();
+    trapOsc.type = 'sawtooth';
+    trapOsc.frequency.value = 55; // Deep A1
+    trapGain = ctx.createGain();
+    trapGain.gain.value = 0;
+    trapOsc.connect(trapGain);
+    trapGain.connect(ctx.destination);
+    trapOsc.start();
+  }
+  
+  const target = intensity * 0.04;
+  trapGain.gain.linearRampToValueAtTime(target, ctx.currentTime + 1.0);
+}
+
+window.setTrapIntensity = setTrapIntensity;
 
 // Unlock on first interaction (handled in main.js with audioUnlocked flag)
 document.addEventListener('govnet:audioUnlocked', () => {

@@ -144,6 +144,43 @@ section.stage.active {
   opacity: 0;
   transition: opacity 0.05s;
 }
-#flash-overlay.red  { background: #ff0000; opacity: 0.35; }
 #flash-overlay.black { background: #000000; opacity: 1; }
+
+/* ---- Eerie Trap Error Message ---- */
+#trap-overlay.trap-glitch-error {
+  background: #000 !important;
+  backdrop-filter: brightness(0.2) contrast(2) grayscale(1) !important;
+}
+
+#trap-overlay.trap-glitch-error #trap-main-msg,
+#trap-overlay.trap-glitch-error #trap-sub-msg {
+  color: #d4c9a8 !important; /* Backrooms beige */
+  font-family: 'Newsreader', serif !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.6em !important;
+  text-transform: uppercase !important;
+  animation: eerieVibration 0.07s infinite !important;
+  text-shadow: 
+    0.05em 0 0 rgba(255,255,255,0.4), 
+    -0.03em -0.04em 0 rgba(184,184,160,0.3) !important;
+}
+
+#trap-overlay.trap-glitch-error #trap-main-msg {
+  font-size: clamp(18px, 3.5vw, 32px) !important;
+}
+
+#trap-overlay.trap-glitch-error #trap-sub-msg {
+  font-size: clamp(10px, 1.2vw, 14px) !important;
+  opacity: 0.4 !important;
+  margin-top: 10px;
+}
+
+@keyframes eerieVibration {
+  0%   { transform: translate(0); }
+  25%  { transform: translate(-1px, 0.5px); }
+  50%  { transform: translate(1px, -0.5px); }
+  75%  { transform: translate(-0.5px, -1px); }
+  100% { transform: translate(0); }
+}
 #flash-overlay.white { background: #ffffff; opacity: 0.9; }

@@ -50,9 +50,9 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: #e8e5cd;
-  border: 2px inset #b0a890;
-  padding: 4px;
+  background: #ffffff;
+  border: 1px solid #000;
+  padding: 6px;
 }
 #s1-logo-seal img {
   width: 100%;

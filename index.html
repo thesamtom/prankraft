@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="assets/async-logo.png">
   <title>GOVNET — CITIZEN SERVICES PORTAL v2.1</title>
   <meta name="description" content="GOVNET Ministry of Citizen Services — Official Portal. Established 1997. Definitely Secure.">
   <meta name="robots" content="noindex"> <!-- Competition integrity -->
@@ -21,6 +22,7 @@
   <link rel="stylesheet" href="css/stage4.css">
   <link rel="stylesheet" href="css/stage5.css">
   <link rel="stylesheet" href="css/stage6.css">
+  <link rel="stylesheet" href="css/stage7.css">
   <link rel="stylesheet" href="css/trapped.css">
 </head>
 <body>
@@ -49,7 +51,7 @@
   <!-- Header -->
   <div id="s1-header">
     <div id="s1-logo-seal">
-      <img src="assets/async-logo.png" alt="MINISTRY SEAL">
+      <img src="assets/async-logo.png" alt="ASYNC SEAL">
     </div>
     <div id="s1-header-text">
       <h1>GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES</h1>
@@ -548,6 +550,17 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════════
+     STAGE 7 — THE ROOM (360 SPHERE)
+     ══════════════════════════════════════════════ -->
+<section id="stage7" class="stage">
+  <div id="s7-renderer-wrap"></div>
+  <div id="s7-grain"      aria-hidden="true"></div>
+  <div id="s7-scanlines"  aria-hidden="true"></div>
+  <div id="s7-vignette"   aria-hidden="true"></div>
+  <div id="s7-fade"       aria-hidden="true"></div>
+</section>
+
 
 <!-- ══════════════════════════════════════════════
      GLOBAL OVERLAYS
@@ -593,6 +606,9 @@
 <!-- ══════════════════════════════════════════════
      JAVASCRIPT — Load order matters
      ══════════════════════════════════════════════ -->
+<!-- Three.js (For Stage 7) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script src="js/main.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/stage1.js"></script>
@@ -601,6 +617,7 @@
 <script src="js/terminal.js"></script>
 <script src="js/stage5.js"></script>
 <script src="js/stage6.js"></script>
+<script src="js/stage7.js"></script>
 <script src="js/trapped.js"></script>
 
 <!-- Quick wire-ups for stage1 quick-access links -->

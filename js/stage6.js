@@ -97,13 +97,111 @@ function playNoiseBurst() {
   src.stop(droneCtx.currentTime + duration + 0.01);
 }
 
+let s6TransitionTimeout = null;
+
+// ---- GLITCH TRANSITION TO STAGE 7 ----
+function triggerStage7Glitch() {
+  const glitchDiv = document.createElement('div');
+  glitchDiv.id = 's7-glitch-transition';
+  Object.assign(glitchDiv.style, {
+    position: 'fixed', inset: '0', zIndex: '9000',
+    backgroundColor: '#000', overflow: 'hidden'
+  });
+  document.body.appendChild(glitchDiv);
+
+  // Phase 1: RGB Split
+  const r = document.createElement('div');
+  const g = document.createElement('div');
+  const b = document.createElement('div');
+  [r, g, b].forEach(el => {
+    Object.assign(el.style, {
+      position: 'absolute', inset: '0', mixBlendMode: 'screen', opacity: '0.7'
+    });
+    glitchDiv.appendChild(el);
+  });
+  r.style.backgroundColor = '#ff0000'; r.style.transform = 'translateX(-8px)';
+  g.style.backgroundColor = '#00ff00'; g.style.transform = 'translateX(0px)';
+  b.style.backgroundColor = '#0000ff'; b.style.transform = 'translateX(8px)';
+
+  let rgbInterval = setInterval(() => {
+    [r, g, b].forEach(el => {
+      const tx = (Math.random() * 24 - 12);
+      const ty = (Math.random() * 8 - 4);
+      el.style.transform = `translate(${tx}px, ${ty}px)`;
+    });
+  }, 30);
+
+  // Phase 2: Horizontal Scan Tears (at 150ms)
+  let tearInterval;
+  setTimeout(() => {
+    tearInterval = setInterval(() => {
+      const p = [];
+      let y = 0;
+      while (y < 100) {
+        const h = Math.random() * 15 + 2;
+        const off = (Math.random() * 35 + 5) * (Math.random() > 0.5 ? 1 : -1);
+        p.push(`0% ${y}%`, `${off}px ${y}%`, `${off}px ${y + h}%`, `0% ${y + h}%`, `0% ${y}%`, `${-off}px ${y}%`); // simple alternating rects
+        y += h;
+      }
+      glitchDiv.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%)`; // Placeholder, real clip path in next tick
+      
+      const r1 = Math.random() * 100;
+      const r2 = r1 + Math.random() * 20;
+      const offset = (Math.random() * 40 - 20);
+      glitchDiv.style.clipPath = `polygon(0 0%, ${offset}px 0%, ${offset}px ${r1}%, 0 ${r1}%, 0 ${r2}%, ${-offset}px ${r2}%)`; 
+    }, 40);
+  }, 150);
+
+  // Phase 3: Flicker to White (400ms to 500ms)
+  let flickerInterval;
+  setTimeout(() => {
+    clearInterval(rgbInterval);
+    clearInterval(tearInterval);
+    glitchDiv.style.clipPath = '';
+    [r, g, b].forEach(el => el.style.display = 'none');
+    
+    let isWhite = true;
+    glitchDiv.style.backgroundColor = '#ffffff';
+    flickerInterval = setInterval(() => {
+      isWhite = !isWhite;
+      glitchDiv.style.backgroundColor = isWhite ? '#ffffff' : '#000000';
+    }, 25);
+  }, 400);
+
+  // Phase 4: Hold Black (500ms to 700ms)
+  setTimeout(() => {
+    clearInterval(flickerInterval);
+    glitchDiv.style.backgroundColor = '#000000';
+  }, 500);
+
+  // Phase 5: Destroy and Start Stage 7
+  setTimeout(() => {
+    if (glitchDiv.parentNode) glitchDiv.parentNode.removeChild(glitchDiv);
+    if (window.GOVNET && typeof window.goToStage === 'function') {
+      window.goToStage(7);
+    }
+  }, 700);
+}
+
 // ---- STAGE 6 ENTRY ----
 document.addEventListener('govnet:stageEnter', ({ detail }) => {
-  if (detail.stage !== 6) return;
+  if (detail.stage === 6) {
+    initDrone();
 
-  // Start the drone
-  initDrone();
-
-  // Credits scroll is handled entirely by CSS animation
-  // No JS needed for scroll — it loops forever automatically.
+    // Restore the 88s delay to allow the credits to roll fully.
+    // The "instant glitch" will trigger the moment the credits finish.
+    s6TransitionTimeout = setTimeout(() => {
+      triggerStage7Glitch();
+    }, 88000);
+  } else {
+    // Cleanup Stage 6
+    if (s6TransitionTimeout) {
+      clearTimeout(s6TransitionTimeout);
+      s6TransitionTimeout = null;
+    }
+    if (noiseInterval) {
+      clearTimeout(noiseInterval);
+      noiseInterval = null;
+    }
+  }
 });

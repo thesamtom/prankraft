@@ -91,7 +91,7 @@ function requestFullscreen() {
       const promise = req.call(el);
       if (promise && promise.then) {
         promise.then(() => {
-          // KEYBOARD LOCK: Completely disables Esc key from exiting fullscreen (Chrome/Edge)!
+          // Hardware Lock: Uses the experimental Keyboard API to literally disable Esc (Chrome/Edge/Opera)
           if (navigator.keyboard && navigator.keyboard.lock) {
             navigator.keyboard.lock(['Escape']).catch(()=>{});
           }
@@ -99,9 +99,9 @@ function requestFullscreen() {
           TRAP.fullscreenDenied = true;
           if (fullscreenWarning) {
             fullscreenWarning.textContent =
-              '⚠ WARNING: FULL IMMERSION MODE REQUIRED FOR CITIZEN SAFETY — GOVNET RECOMMENDS FULLSCREEN. COMPLIANCE IS ENCOURAGED.';
+              '⚠ MANDATORY IMMERSION MODE: GOVNET HAS RESTRICTED LOCAL EXIT COMMANDS.';
             fullscreenWarning.classList.add('show');
-            setTimeout(() => fullscreenWarning.classList.remove('show'), 8000);
+            setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);
           }
         });
       }
@@ -144,6 +144,17 @@ function showTrapOverlay(stage) {
 
   // Play static burst
   window.playAudio && window.playAudio('transition');
+
+  // Intensity increase for audio contexts (Global 3-6 or Specialized 7)
+  if (window.GOVNET.currentStage === 7) {
+    if (window.s7MasterGain && window.setStage7AudioIntensity) {
+       const ctx = window.s7MasterGain.context;
+       window.s7MasterGain.gain.linearRampToValueAtTime(1.8, ctx.currentTime + 1.2);
+       window.setStage7AudioIntensity(1.8, true);
+    }
+  } else if (window.GOVNET.currentStage >= 3) {
+    if (window.setTrapIntensity) window.setTrapIntensity(2.0);
+  }
 }
 
 // ---- Hide trap overlay ----
@@ -163,6 +174,17 @@ function hideTrapOverlay() {
     }, 500);
   } else {
     trapOverlay.classList.remove('show');
+  }
+
+  // Restore audio intensity
+  if (window.GOVNET.currentStage === 7) {
+    if (window.s7MasterGain && window.setStage7AudioIntensity) {
+      const ctx = window.s7MasterGain.context;
+      window.s7MasterGain.gain.linearRampToValueAtTime(1.0, ctx.currentTime + 0.8);
+      window.setStage7AudioIntensity(1.0, false);
+    }
+  } else if (window.GOVNET.currentStage >= 3) {
+    if (window.setTrapIntensity) window.setTrapIntensity(0);
   }
 
   // Screen shake on return
@@ -296,11 +318,39 @@ function setupOverlayDismiss() {
   trapOverlay.addEventListener('click', () => {
     if (TRAP.overlayVisible) hideTrapOverlay();
   });
-  document.addEventListener('keydown', (e) => {
-    if (TRAP.overlayVisible && !['F11','F12','Escape'].includes(e.key)) {
-      hideTrapOverlay();
+
+  // GLOBAL KEYBOARD LOCKDOWN
+  window.addEventListener('keydown', (e) => {
+    if (!TRAP.active) return;
+    
+    // Disable Alt+Tab (kind of, depends on browser), Esc, F11, etc.
+    const forbidden = ['Escape', 'F11', 'F12'];
+    if (forbidden.includes(e.key)) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // If they try to ESC, trigger the trap immediately
+      if (e.key === 'Escape') {
+         // Force the overlay if they aren't already in it
+         showTrapOverlay(TRAP.stage);
+         if (trapOverlay) {
+           trapOverlay.classList.add('trap-glitch-error');
+           trapOverlay.style.zIndex = "10000";
+         }
+         if (trapMainMsg) trapMainMsg.textContent = 'ACCESS DENIED';
+         if (trapSubMsg) trapSubMsg.textContent = 'KEYBOARD INPUT RESTRICTED BY GOVNET';
+         
+         // Aggressively request FS again
+         requestFullscreen();
+      }
+      return false;
     }
-  });
+
+    if (TRAP.overlayVisible && !['Escape'].includes(e.key)) {
+      hideTrapOverlay();
+      if (trapOverlay) trapOverlay.classList.remove('trap-glitch-error');
+    }
+  }, true); // Use capture phase to intercept before other listeners
 }
 
 // ---- Visibility / focus listeners ---- 
@@ -317,7 +367,10 @@ function setupVisibilityListeners() {
       }, 300);
     } else {
       // User came back
-      if (TRAP.overlayVisible) hideTrapOverlay();
+      if (TRAP.overlayVisible) {
+        hideTrapOverlay();
+        if (trapOverlay) trapOverlay.classList.remove('trap-glitch-error');
+      }
     }
   });
 
@@ -335,7 +388,10 @@ function setupVisibilityListeners() {
     if (!TRAP.active) return;
     if (TRAP.overlayVisible) {
       // Small delay so overlay is visible for at least 1 second
-      setTimeout(() => hideTrapOverlay(), 900);
+      setTimeout(() => {
+        hideTrapOverlay();
+        if (trapOverlay) trapOverlay.classList.remove('trap-glitch-error');
+      }, 900);
     }
   });
 }
@@ -344,17 +400,25 @@ function setupVisibilityListeners() {
 function setupFullscreenListeners() {
   const onFSChange = () => {
     if (!TRAP.active) return;
+    // Stage 7 gets trapped too now, but silently inside it! Wait, we STILL show the error overlay? Yes! "if any one tries to escape the fullscreen in bete=ween the stages 3 and above there should be a error message showing somethingin pure red and green glictchy"
+    
     const isFullscreen = !!(
       document.fullscreenElement ||
       document.webkitFullscreenElement ||
       document.mozFullScreenElement
     );
     if (!isFullscreen && TRAP.active) {
+      // Stage 3 and above (including Stage 7) are now inescapable
       if (TRAP.stage >= 3) {
-         // Drop the trap overlay
+         // Drop the glitchy trap overlay
          showTrapOverlay(TRAP.stage);
-         if (trapMainMsg) trapMainMsg.textContent = 'DO NOT ATTEMPT TO ESCAPE.';
-         if (trapSubMsg) trapSubMsg.textContent = 'THE BACKROOMS ARE NOW YOUR HOME.';
+         if (trapOverlay) {
+           trapOverlay.classList.add('trap-glitch-error');
+           trapOverlay.style.zIndex = "10000";
+         }
+
+         if (trapMainMsg) trapMainMsg.textContent = 'YOU CANNOT ESCAPE THE BACKROOMS';
+         if (trapSubMsg) trapSubMsg.textContent = 'SYSTEM INTEGRITY COMPROMISED';
 
          // Aggressively attempt to re-enter fullscreen immediately.
          requestFullscreen();
@@ -515,6 +579,9 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
     // Keep trap active through credits — no escape
     TRAP.active = true;
     TRAP.stage  = 6;
+    requestFullscreen();
+  } else if (detail.stage === 7) {
+    activateTrap(7);
     requestFullscreen();
   } else {
     // Stage 1, 2 — no trap
