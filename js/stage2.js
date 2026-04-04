@@ -9,42 +9,150 @@ let submitAttempts = 0;
 let navDriftInterval;
 let legalBlurTimeout;
 
-// ---- Name field "ARE YOU PAYING ATTENTION?" ----
+// ---- Name field "ARE YOU PAYING ATTENTION?" + auto-gen Citizen ID ----
 function initNameField() {
   const nameInput = document.getElementById('s2-name');
+  const cidInput = document.getElementById('s2-citizen-id');
   if (!nameInput) return;
 
+  let hasShownAttention = false;
   let resetTimer;
+
   nameInput.addEventListener('focus', () => {
-    nameInput.value = 'ARE YOU PAYING ATTENTION?';
-    resetTimer = setTimeout(() => {
-      nameInput.value = '';
-    }, 2000);
+    if (!hasShownAttention) {
+      hasShownAttention = true;
+      nameInput.value = 'ARE YOU PAYING ATTENTION?';
+      resetTimer = setTimeout(() => {
+        nameInput.value = '';
+      }, 2000);
+    }
   });
   nameInput.addEventListener('blur', () => clearTimeout(resetTimer));
+
+  // Auto-generate Citizen ID from name
+  if (cidInput) {
+    cidInput.readOnly = true;
+    cidInput.style.cursor = 'not-allowed';
+    cidInput.style.opacity = '0.85';
+    cidInput.title = 'Auto-generated from your identity. You cannot change this.';
+
+    nameInput.addEventListener('input', () => {
+      const name = nameInput.value.trim().toUpperCase().replace(/[^A-Z]/g, '');
+      if (name.length === 0) {
+        cidInput.value = '';
+        cidInput.placeholder = 'Format: XX-BACK-XX';
+        return;
+      }
+
+      // Take first 2 letters of the name (pad with X if only 1 char)
+      const prefix = (name.slice(0, 2) + 'XX').slice(0, 2);
+      // Generate 2 random digits
+      const suffix = String(Math.floor(Math.random() * 100)).padStart(2, '0');
+
+      cidInput.value = `${prefix}-BACK-${suffix}`;
+
+      // Brief glitch effect — the system "knows" you
+      cidInput.classList.add('shake');
+      setTimeout(() => cidInput.classList.remove('shake'), 300);
+    });
+  }
 }
 
-// ---- Submit button drifts away on hover ----
+// ---- Check if form is incomplete ----
+function isFormIncomplete() {
+  const name = document.getElementById('s2-name');
+  const cid = document.getElementById('s2-citizen-id');
+  const purpose = document.getElementById('s2-purpose');
+  const benefit = document.getElementById('s2-benefit-type');
+  const checkbox = document.getElementById('s2-exist-confirm');
+
+  if (!name || !name.value.trim()) return true;
+  if (!cid || !cid.value.trim()) return true;
+  if (!purpose || !purpose.value) return true;
+  if (!benefit || !benefit.value) return true;
+  if (!checkbox || !checkbox.checked) return true;
+  return false;
+}
+
+// ---- Submit button dodges cursor when form is incomplete ----
 function initDriftButton() {
   const btn = document.getElementById('s2-submit-btn');
-  if (!btn) return;
+  const formWrap = document.getElementById('s2-form-wrap');
+  if (!btn || !formWrap) return;
 
-  let driftX = 0;
-  let driftY = 0;
+  const DODGE_RADIUS = 120;  // how close cursor can get before dodge triggers
+  let isDodging = false;
+  let dodgeCount = 0;
 
-  btn.addEventListener('mouseenter', () => {
-    if (submitAttempts >= 2) return; // stop drifting after 3rd click logic kicks in
-    driftX = (Math.random() - 0.5) * 16;
-    driftY = (Math.random() - 0.5) * 10;
-    btn.style.setProperty('--drift-x', `${driftX}px`);
-    btn.style.setProperty('--drift-y', `${driftY}px`);
-    btn.classList.add('drifting');
+  // Track mouse and dodge when cursor gets near the button
+  formWrap.addEventListener('mousemove', (e) => {
+    // Don't dodge if form is complete or after 3rd submit attempt
+    if (!isFormIncomplete() || submitAttempts >= 2) {
+      btn.style.transform = '';
+      btn.style.position = 'relative';
+      btn.style.left = '';
+      btn.style.top = '';
+      btn.classList.remove('dodging');
+      return;
+    }
+
+    const rect = btn.getBoundingClientRect();
+    const btnCenterX = rect.left + rect.width / 2;
+    const btnCenterY = rect.top + rect.height / 2;
+
+    const dx = e.clientX - btnCenterX;
+    const dy = e.clientY - btnCenterY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < DODGE_RADIUS) {
+      isDodging = true;
+      dodgeCount++;
+      btn.classList.add('dodging');
+
+      // Calculate dodge direction (away from cursor)
+      const angle = Math.atan2(dy, dx);
+      // Dodge distance increases with each attempt (more frantic)
+      const dodgeDist = 80 + Math.min(dodgeCount * 15, 200);
+
+      // Calculate new position (opposite direction from cursor)
+      let moveX = -Math.cos(angle) * dodgeDist + (Math.random() - 0.5) * 60;
+      let moveY = -Math.sin(angle) * dodgeDist + (Math.random() - 0.5) * 40;
+
+      // Keep button within the form wrap bounds
+      const wrapRect = formWrap.getBoundingClientRect();
+      const futureX = rect.left + moveX;
+      const futureY = rect.top + moveY;
+
+      // Bounce off edges
+      if (futureX < wrapRect.left + 10) moveX = Math.abs(moveX);
+      if (futureX + rect.width > wrapRect.right - 10) moveX = -Math.abs(moveX);
+      if (futureY < wrapRect.top + 10) moveY = Math.abs(moveY);
+      if (futureY + rect.height > wrapRect.bottom - 10) moveY = -Math.abs(moveY);
+
+      btn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    }
   });
-  btn.addEventListener('mouseleave', () => {
-    btn.classList.remove('drifting');
-    btn.style.setProperty('--drift-x', '0px');
-    btn.style.setProperty('--drift-y', '0px');
+
+  // Reset button text when form becomes complete
+  const formFields = ['s2-name', 's2-purpose', 's2-benefit-type'];
+  formFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('change', checkFormAndResetBtn);
+      el.addEventListener('input', checkFormAndResetBtn);
+    }
   });
+  const checkbox = document.getElementById('s2-exist-confirm');
+  if (checkbox) checkbox.addEventListener('change', checkFormAndResetBtn);
+
+  function checkFormAndResetBtn() {
+    if (!isFormIncomplete()) {
+      btn.style.transform = '';
+      btn.classList.remove('dodging');
+      btn.textContent = 'SUBMIT FORM 27-B/6';
+      dodgeCount = 0;
+    }
+  }
 }
 
 // ---- Field shake on submit with empty fields ----

@@ -182,7 +182,7 @@
   color: #333;
 }
 
-/* Submit button — moves on hover */
+/* Submit button — dodges cursor when form incomplete */
 #s2-submit-btn {
   background: var(--gov-navy);
   color: #fff;
@@ -193,11 +193,19 @@
   cursor: pointer;
   display: block;
   margin: 0 auto;
-  transition: transform 0.25s ease;
+  transition: transform 0.15s ease-out, background 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+  z-index: 10;
+  user-select: none;
 }
 #s2-submit-btn:active { border-style: inset; }
-/* JS sets --drift-x, --drift-y custom props on hover */
+
+/* When actively dodging — same look, just moves */
+#s2-submit-btn.dodging {
+  transition: transform 0.12s ease-out;
+}
+
+/* Old drifting class kept for compatibility */
 #s2-submit-btn.drifting {
   transform: translate(var(--drift-x, 0px), var(--drift-y, 0px));
   transition: transform 0.3s ease;
