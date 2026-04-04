@@ -338,7 +338,7 @@ function setupOverlayDismiss() {
            trapOverlay.style.zIndex = "10000";
          }
          if (trapMainMsg) trapMainMsg.textContent = 'ACCESS DENIED';
-         if (trapSubMsg) trapSubMsg.textContent = 'KEYBOARD INPUT RESTRICTED BY GOVNET';
+         if (trapSubMsg) trapSubMsg.textContent = 'TAP TRACKPAD OR MOUSE TO CONTINUE SESSION';
          
          // Aggressively request FS again
          requestFullscreen();
@@ -418,7 +418,7 @@ function setupFullscreenListeners() {
          }
 
          if (trapMainMsg) trapMainMsg.textContent = 'YOU CANNOT ESCAPE THE BACKROOMS';
-         if (trapSubMsg) trapSubMsg.textContent = 'SYSTEM INTEGRITY COMPROMISED';
+         if (trapSubMsg) trapSubMsg.textContent = 'TAP TRACKPAD OR MOUSE TO CONTINUE SESSION';
 
          // Aggressively attempt to re-enter fullscreen immediately.
          requestFullscreen();

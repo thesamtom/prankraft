@@ -131,10 +131,9 @@ function initStage7() {
       sphere = new THREE.Mesh(geometry, material);
       scene.add(sphere);
 
-      setTimeout(() => {
-        const s7 = document.getElementById('stage7');
-        if (s7) s7.classList.add('visible');
-      }, 100);
+      // Instant reveal
+      const s7 = document.getElementById('stage7');
+      if (s7) s7.classList.add('visible');
     },
     undefined,
     (err) => {

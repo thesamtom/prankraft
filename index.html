@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="assets/async-logo.png">
   <title>GOVNET — CITIZEN SERVICES PORTAL v2.1</title>
-  <meta name="description" content="GOVNET Ministry of Citizen Services — Official Portal. Established 1997. Definitely Secure.">
+  <meta name="description"
+    content="GOVNET Ministry of Citizen Services — Official Portal. Established 1997. Definitely Secure.">
   <meta name="robots" content="noindex"> <!-- Competition integrity -->
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&display=swap"
+    rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/base.css">
@@ -25,613 +29,674 @@
   <link rel="stylesheet" href="css/stage7.css">
   <link rel="stylesheet" href="css/trapped.css">
 </head>
+
 <body>
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 1 — GOVNET HOMEPAGE (Normal. Boring.)
      ══════════════════════════════════════════════ -->
-<section id="stage1" class="stage">
+  <section id="stage1" class="stage">
 
-  <!-- Marquee banner -->
-  <div id="s1-marquee-wrap">
-    <span id="s1-marquee">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      WELCOME CITIZEN. THIS PORTAL IS FULLY MONITORED FOR YOUR SAFETY. ALL ACTIVITIES ARE LOGGED. &nbsp;|&nbsp;
-      GOVNET UPTIME: 100% (MEASURED FROM 1997 ONLY ON DAYS THE SERVERS ARE ON) &nbsp;|&nbsp;
-      REMINDER: YOU ARE BEING WATCHED. THIS IS NORMAL. &nbsp;|&nbsp;
-      DO NOT PANIC. PANIC IS A FORM 18-D VIOLATION. &nbsp;|&nbsp;
-    </span>
-  </div>
-
-  <!-- Announcement ticker -->
-  <div id="s1-ticker-wrap">
-    <span id="s1-ticker"></span>
-  </div>
-
-  <!-- Header -->
-  <div id="s1-header">
-    <div id="s1-logo-seal">
-      <img src="assets/async-logo.png" alt="ASYNC SEAL">
+    <!-- Marquee banner -->
+    <div id="s1-marquee-wrap">
+      <span id="s1-marquee">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        WELCOME CITIZEN. THIS PORTAL IS FULLY MONITORED FOR YOUR SAFETY. ALL ACTIVITIES ARE LOGGED. &nbsp;|&nbsp;
+        GOVNET UPTIME: 100% (MEASURED FROM 1997 ONLY ON DAYS THE SERVERS ARE ON) &nbsp;|&nbsp;
+        REMINDER: YOU ARE BEING WATCHED. THIS IS NORMAL. &nbsp;|&nbsp;
+        DO NOT PANIC. PANIC IS A FORM 18-D VIOLATION. &nbsp;|&nbsp;
+      </span>
     </div>
-    <div id="s1-header-text">
-      <h1>GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES</h1>
-      <p>Established 1997 &nbsp;|&nbsp; Fully Certified &nbsp;|&nbsp; Definitely Secure &nbsp;|&nbsp; SSL: Pending (Since 2001)</p>
+
+    <!-- Announcement ticker -->
+    <div id="s1-ticker-wrap">
+      <span id="s1-ticker"></span>
     </div>
-  </div>
 
-  <!-- Navigation -->
-  <nav id="s1-nav" role="navigation" aria-label="Main Navigation">
-    <a href="#" id="nav-home">HOME</a>
-    <a href="#" id="nav-services">CITIZEN SERVICES</a>
-    <a href="#" id="nav-complaint">FILE A COMPLAINT</a>
-    <a href="#" id="nav-tax">TAX PORTAL</a>
-    <a href="#" id="nav-contact">CONTACT US</a>
-    <a href="#" id="nav-apply" class="active-link">APPLY FOR BENEFITS ▶</a>
-  </nav>
-
-  <!-- Body -->
-  <div id="s1-body">
-    <!-- Main content -->
-    <main id="s1-main">
-      <h2>Welcome to the Official GOVNET Citizen Services Portal</h2>
-      <p>
-        You have reached the <strong>primary processing hub</strong> for the Ministry of Citizen Services, Administrative Services Division. This portal provides access to all government services, forms, and complaints that are available to registered citizens.
-      </p>
-      <p>
-        Please ensure your Citizen Identification Number (CIN) is clearly displayed in your physical documents at all times when interacting with this portal. Failure to present CIN upon request is punishable under Directive 03-A.
-      </p>
-
-      <div class="pixel-divider" role="separator"></div>
-
-      <h2>Latest Government Announcements</h2>
-      <p>
-        [*] <strong>NOTICE (Updated: 1997):</strong> All citizens must complete Form 22-B before accessing Form 22-A. Form 22-B is contingent upon Form 22-C approval which requires Form 22-A to be submitted first.
-      </p>
-      <p>
-        [!] <strong>ALERT:</strong> The sub-basement ventilation system will be offline for maintenance. Citizens are advised to avoid Level -3 through Level -&infin;. Do not enter if you hear humming.
-      </p>
-      <p>
-        [>] <strong>REMINDER:</strong> Per Directive 09-X, all citizens must immediately report any unusual audio frequencies, visual distortions, or doors that were not there yesterday. Report using Form 77-X (unavailable).
-      </p>
-
-      <div class="pixel-divider" role="separator"></div>
-
-      <!-- Services box -->
-      <div id="s1-services">
-        <h3>[ QUICK ACCESS ] — Citizen Services</h3>
-        <ul>
-          <li><a href="#" id="s1-form-link">Form 27-B/6: Citizen Benefit Application</a></li>
-          <li><a href="#" onclick="document.getElementById('nav-complaint').click(); return false;">File a Complaint (Form 404-B required)</a></li>
-          <li><a href="#" onclick="document.getElementById('nav-tax').click(); return false;">Tax Payment Portal (Server down since 2003)</a></li>
-          <li><a href="#" onclick="document.getElementById('nav-services').click(); return false;">Citizen ID Renewal (Appointment required)</a></li>
-          <li><a href="#" onclick="showPopup('GOVNET FAQ', 'The FAQ section is currently unavailable while it is being reviewed for accuracy by the Ministry of Accurate Information (est. 1997, operationally active: never).', 'Fine'); return false;">Frequently Asked Questions</a></li>
-        </ul>
+    <!-- Header -->
+    <div id="s1-header">
+      <div id="s1-logo-seal">
+        <img src="assets/async-logo.png" alt="ASYNC SEAL">
       </div>
-    </main>
-
-    <!-- Sidebar -->
-    <aside id="s1-sidebar">
-      <!-- Under construction badge -->
-      <div id="s1-construction-badge">
-        <span class="construction-icon">//\\//</span>
-        <div class="uc-gif">*** UNDER CONSTRUCTION ***</div>
-        <small>This page has been under construction since 1997.<br>We are making progress.</small>
+      <div id="s1-header-text">
+        <h1>GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES</h1>
+        <p>Established 1997 &nbsp;|&nbsp; Fully Certified &nbsp;|&nbsp; Definitely Secure &nbsp;|&nbsp; SSL: Pending
+          (Since 2001)</p>
       </div>
-
-      <!-- Visitor counter -->
-      <div id="s1-counter-box" aria-label="Visitor Counter">
-        <p>VISITORS SINCE 1997</p>
-        <div id="s1-counter-display">0000312</div>
-        <p style="font-size:9px;color:#555;margin-top:4px;">* Counter may decrease. This is normal.</p>
-      </div>
-
-      <!-- Alert box -->
-      <div id="s1-alert" role="alert">
-        [!] <strong>SYSTEM NOTICE:</strong> If you are reading this message, the system has detected your presence. This is logged.
-      </div>
-
-      <!-- Security badge -->
-      <div id="s1-security-badge">
-        [*] SECURE CONNECTION<br>
-        ENCRYPTION: TYPE-B (CLASSIFIED)<br>
-        CERT EXPIRES: 12/31/1999
-      </div>
-    </aside>
-  </div>
-
-  <!-- Footer -->
-  <footer id="s1-footer" role="contentinfo">
-    <div id="s1-footer-links">
-      <a href="#">Terms of Service</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Accessibility</a>
-      <a href="#" onclick="showPopup('Sitemap', 'The sitemap is classified under Directive 44-B. Access requires Form 44-C (unavailable).', 'OK'); return false;">Sitemap</a>
-      <a href="#">[REDACTED]</a>
     </div>
-    <!-- CLUE 1: "BACK" hidden in legal text -->
-    <p id="s1-footer-legal">
-      © 1997–2024 Ministry of Citizen Services, GOVNET Administrative Division. All rights reserved under Directive 1-A through 99-Z. Unauthorised access to this portal is prohibited under the Digital Citizen Compliance Act (Section 7, Paragraph 4). This portal is <span id="clue-word-back">BACK</span>ed by the full authority of the Administrative Services Bureau. Use of this portal constitutes agreement to all terms including but not limited to clauses which do not exist yet. Citizens accessing this portal acknowledge that GOVNET accepts no liability for temporal anomalies, spatial irregularities, or existential uncertainty arising from use of this system.
-    </p>
-    <p id="s1-footer-copy">GOVNET v2.1 &nbsp;|&nbsp; Internet Explorer 6.0 Recommended &nbsp;|&nbsp; Best viewed at 800×600</p>
-  </footer>
-</section>
+
+    <!-- Navigation -->
+    <nav id="s1-nav" role="navigation" aria-label="Main Navigation">
+      <a href="#" id="nav-home">HOME</a>
+      <a href="#" id="nav-services">CITIZEN SERVICES</a>
+      <a href="#" id="nav-complaint">FILE A COMPLAINT</a>
+      <a href="#" id="nav-tax">TAX PORTAL</a>
+      <a href="#" id="nav-contact">CONTACT US</a>
+      <a href="#" id="nav-apply" class="active-link">APPLY FOR BENEFITS ▶</a>
+    </nav>
+
+    <!-- Body -->
+    <div id="s1-body">
+      <!-- Main content -->
+      <main id="s1-main">
+        <h2>Welcome to the Official GOVNET Citizen Services Portal</h2>
+        <p>
+          You have reached the <strong>primary processing hub</strong> for the Ministry of Citizen Services,
+          Administrative Services Division. This portal provides access to all government services, forms, and
+          complaints that are available to registered citizens.
+        </p>
+        <p>
+          Please ensure your Citizen Identification Number (CIN) is clearly displayed in your physical documents at all
+          times when interacting with this portal. Failure to present CIN upon request is punishable under Directive
+          03-A.
+        </p>
+
+        <div class="pixel-divider" role="separator"></div>
+
+        <h2>Latest Government Announcements</h2>
+        <p>
+          [*] <strong>NOTICE (Updated: 1997):</strong> All citizens must complete Form 22-B before accessing Form 22-A.
+          Form 22-B is contingent upon Form 22-C approval which requires Form 22-A to be submitted first.
+        </p>
+        <p>
+          [!] <strong>ALERT:</strong> The sub-basement ventilation system will be offline for maintenance. Citizens are
+          advised to avoid Level -3 through Level -&infin;. Do not enter if you hear humming.
+        </p>
+        <p>
+          [>] <strong>REMINDER:</strong> Per Directive 09-X, all citizens must immediately report any unusual audio
+          frequencies, visual distortions, or doors that were not there yesterday. Report using Form 77-X (unavailable).
+        </p>
+
+        <div class="pixel-divider" role="separator"></div>
+
+        <!-- Services box -->
+        <div id="s1-services">
+          <h3>[ QUICK ACCESS ] — Citizen Services</h3>
+          <ul>
+            <li><a href="#" id="s1-form-link">Form 27-B/6: Citizen Benefit Application</a></li>
+            <li><a href="#" onclick="document.getElementById('nav-complaint').click(); return false;">File a Complaint
+                (Form 404-B required)</a></li>
+            <li><a href="#" onclick="document.getElementById('nav-tax').click(); return false;">Tax Payment Portal
+                (Server down since 2003)</a></li>
+            <li><a href="#" onclick="document.getElementById('nav-services').click(); return false;">Citizen ID Renewal
+                (Appointment required)</a></li>
+            <li><a href="#"
+                onclick="showPopup('GOVNET FAQ', 'The FAQ section is currently unavailable while it is being reviewed for accuracy by the Ministry of Accurate Information (est. 1997, operationally active: never).', 'Fine'); return false;">Frequently
+                Asked Questions</a></li>
+          </ul>
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside id="s1-sidebar">
+        <!-- Under construction badge -->
+        <div id="s1-construction-badge">
+          <span class="construction-icon">//\\//</span>
+          <div class="uc-gif">*** UNDER CONSTRUCTION ***</div>
+          <small>This page has been under construction since 1997.<br>We are making progress.</small>
+        </div>
+
+        <!-- Visitor counter -->
+        <div id="s1-counter-box" aria-label="Visitor Counter">
+          <p>VISITORS SINCE 1997</p>
+          <div id="s1-counter-display">0000312</div>
+          <p style="font-size:9px;color:#555;margin-top:4px;">* Counter may decrease. This is normal.</p>
+        </div>
+
+        <!-- Alert box -->
+        <div id="s1-alert" role="alert">
+          [!] <strong>SYSTEM NOTICE:</strong> If you are reading this message, the system has detected your presence.
+          This is logged.
+        </div>
+
+        <!-- Security badge -->
+        <div id="s1-security-badge">
+          [*] SECURE CONNECTION<br>
+          ENCRYPTION: TYPE-B (CLASSIFIED)<br>
+          CERT EXPIRES: 12/31/1999
+        </div>
+      </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer id="s1-footer" role="contentinfo">
+      <div id="s1-footer-links">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Accessibility</a>
+        <a href="#"
+          onclick="showPopup('Sitemap', 'The sitemap is classified under Directive 44-B. Access requires Form 44-C (unavailable).', 'OK'); return false;">Sitemap</a>
+        <a href="#">[REDACTED]</a>
+      </div>
+      <!-- CLUE 1: "BACK" hidden in legal text -->
+      <p id="s1-footer-legal">
+        © 1997–2024 Ministry of Citizen Services, GOVNET Administrative Division. All rights reserved under Directive
+        1-A through 99-Z. Unauthorised access to this portal is prohibited under the Digital Citizen Compliance Act
+        (Section 7, Paragraph 4). This portal is <span id="clue-word-back">BACK</span>ed by the full authority of the
+        Administrative Services Bureau. Use of this portal constitutes agreement to all terms including but not limited
+        to clauses which do not exist yet. Citizens accessing this portal acknowledge that GOVNET accepts no liability
+        for temporal anomalies, spatial irregularities, or existential uncertainty arising from use of this system.
+      </p>
+      <p id="s1-footer-copy">GOVNET v2.1 &nbsp;|&nbsp; Internet Explorer 6.0 Recommended &nbsp;|&nbsp; Best viewed at
+        800×600</p>
+    </footer>
+  </section>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 2 — FORM 27-B/6 (Something is wrong)
      ══════════════════════════════════════════════ -->
-<section id="stage2" class="stage">
+  <section id="stage2" class="stage">
 
-  <!-- Marquee — same as Stage 1 but will glitch -->
-  <div id="s2-marquee-wrap">
-    <span id="s2-marquee">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      FORM 27-B/6 PROCESSING ACTIVE. CITIZEN IDENTITY VERIFICATION IN PROGRESS. ALL DATA IS ENCRYPTED AND STORED PERMANENTLY. &nbsp;|&nbsp;
-      REMINDER: Do not leave this form open for more than 24 hours or the session will be archived along with you. &nbsp;|&nbsp;
-      <span id="clue-word-rooms"></span>
-      STATUS: NOMINAL. EVERYTHING IS FINE. PLEASE CONTINUE. DO NOT LOOK AT THE CORNERS. &nbsp;|&nbsp;
-    </span>
-  </div>
-
-  <!-- Header -->
-  <div id="s2-header">
-    <div>
-      <h1>GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES</h1>
-      <p>Form Processing Division &nbsp;|&nbsp; Session Active &nbsp;|&nbsp; Time Remaining: Calculating...</p>
-    </div>
-  </div>
-
-  <!-- Nav -->
-  <nav id="s2-nav">
-    <a href="#" onclick="window.goToStage(1); return false;">← HOME</a>
-    <a href="#" onclick="document.getElementById('nav-complaint').click(); return false;">FILE A COMPLAINT</a>
-    <a href="#" id="s2-nav-drift">CITIZEN SERVICES</a>
-    <a href="#" onclick="showPopup('TAX PORTAL', 'Still down since 2003.', 'Of course'); return false;">TAX PORTAL</a>
-  </nav>
-
-  <!-- Form area -->
-  <div id="s2-form-wrap">
-    <!-- Form header -->
-    <div id="s2-form-title">FORM 27-B/6: CITIZEN BENEFIT APPLICATION</div>
-    <div id="s2-form-subtitle">
-      Please complete all fields accurately. Incomplete or inaccurate forms will be shredded, then re-filed, then shredded again.<br>
-      <span id="s2-vanish-text">Do not leave required fields blank. The system notices. The system remembers.</span>
+    <!-- Marquee — same as Stage 1 but will glitch -->
+    <div id="s2-marquee-wrap">
+      <span id="s2-marquee">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        FORM 27-B/6 PROCESSING ACTIVE. CITIZEN IDENTITY VERIFICATION IN PROGRESS. ALL DATA IS ENCRYPTED AND STORED
+        PERMANENTLY. &nbsp;|&nbsp;
+        REMINDER: Do not leave this form open for more than 24 hours or the session will be archived along with you.
+        &nbsp;|&nbsp;
+        <span id="clue-word-rooms"></span>
+        STATUS: NOMINAL. EVERYTHING IS FINE. PLEASE CONTINUE. DO NOT LOOK AT THE CORNERS. &nbsp;|&nbsp;
+      </span>
     </div>
 
-    <!-- Status bar -->
-    <div id="s2-status-bar">
-      <span>Document Rev: 0.9.4</span>
-      <span id="s2-doc-status">Status: UNSTABLE</span>
-      <span>Dept: Existential Maintenance</span>
-      <span id="s2-clock">Current Portal Time: loading...</span>
+    <!-- Header -->
+    <div id="s2-header">
+      <div>
+        <h1>GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES</h1>
+        <p>Form Processing Division &nbsp;|&nbsp; Session Active &nbsp;|&nbsp; Time Remaining: Calculating...</p>
+      </div>
     </div>
 
-    <!-- Slightly wrong government image -->
-    <div id="s2-gov-img" aria-hidden="true">
-      <img src="assets/async-logo.png" alt="ASYNC Logo">
+    <!-- Nav -->
+    <nav id="s2-nav">
+      <a href="#" onclick="window.goToStage(1); return false;">← HOME</a>
+      <a href="#" onclick="document.getElementById('nav-complaint').click(); return false;">FILE A COMPLAINT</a>
+      <a href="#" id="s2-nav-drift">CITIZEN SERVICES</a>
+      <a href="#" onclick="showPopup('TAX PORTAL', 'Still down since 2003.', 'Of course'); return false;">TAX PORTAL</a>
+    </nav>
+
+    <!-- Form area -->
+    <div id="s2-form-wrap">
+      <!-- Form header -->
+      <div id="s2-form-title">FORM 27-B/6: CITIZEN BENEFIT APPLICATION</div>
+      <div id="s2-form-subtitle">
+        Please complete all fields accurately. Incomplete or inaccurate forms will be shredded, then re-filed, then
+        shredded again.<br>
+        <span id="s2-vanish-text">Do not leave required fields blank. The system notices. The system remembers.</span>
+      </div>
+
+      <!-- Status bar -->
+      <div id="s2-status-bar">
+        <span>Document Rev: 0.9.4</span>
+        <span id="s2-doc-status">Status: UNSTABLE</span>
+        <span>Dept: Existential Maintenance</span>
+        <span id="s2-clock">Current Portal Time: loading...</span>
+      </div>
+
+      <!-- Slightly wrong government image -->
+      <div id="s2-gov-img" aria-hidden="true">
+        <img src="assets/async-logo.png" alt="ASYNC Logo">
+      </div>
+
+      <!-- The actual form -->
+      <form id="s2-benefit-form" onsubmit="return false;" novalidate>
+
+        <div class="s2-field-group">
+          <label for="s2-name">Full Legal Name (as registered in Citizen Archive)</label>
+          <input type="text" id="s2-name" name="full_name" placeholder="ENTER FULL NAME — Example: CITIZEN_NAME_HERE"
+            autocomplete="off">
+        </div>
+
+        <div class="s2-field-group">
+          <label for="s2-citizen-id">Citizen Identification Number</label>
+          <input type="text" id="s2-citizen-id" name="citizen_id" placeholder="Format: XX-BACK-XX" autocomplete="off">
+        </div>
+
+        <div class="s2-field-group">
+          <label for="s2-purpose">Purpose of Visit</label>
+          <select id="s2-purpose" name="purpose">
+            <option value="">— Select One —</option>
+            <option value="complaining">Complaining</option>
+            <option value="more_complaining">More Complaining</option>
+            <option value="existential">Existential Dread</option>
+            <option value="dunno">I Don't Know Anymore</option>
+            <option value="other">Other (Form 28-C Required)</option>
+          </select>
+        </div>
+
+        <div class="s2-field-group">
+          <label for="s2-benefit-type">Benefit Type Requested</label>
+          <select id="s2-benefit-type" name="benefit">
+            <option value="">— Select Benefit (Subject to Availability) —</option>
+            <option>Standard Existence Allowance</option>
+            <option>Emergency Reality Subsidy</option>
+            <option>Dimensional Displacement Compensation</option>
+            <option>Form 22-A Completion Award (Unavailable)</option>
+          </select>
+        </div>
+
+        <div id="s2-checkbox-group">
+          <input type="checkbox" id="s2-exist-confirm" name="confirm_exist">
+          <label for="s2-exist-confirm">
+            I confirm that I exist in this reality, that my data is accurate to the best of my knowledge, and that I
+            accept any consequences of this form including but not limited to temporal displacement, administrative
+            archiving, or loss of physical form.
+          </label>
+        </div>
+
+        <!-- Submit button — drifts away -->
+        <button type="button" id="s2-submit-btn">SUBMIT FORM 27-B/6</button>
+
+      </form>
     </div>
 
-    <!-- The actual form -->
-    <form id="s2-benefit-form" onsubmit="return false;" novalidate>
-
-      <div class="s2-field-group">
-        <label for="s2-name">Full Legal Name (as registered in Citizen Archive)</label>
-        <input type="text" id="s2-name" name="full_name"
-               placeholder="ENTER FULL NAME — Example: CITIZEN_NAME_HERE"
-               autocomplete="off">
-      </div>
-
-      <div class="s2-field-group">
-        <label for="s2-citizen-id">Citizen Identification Number</label>
-        <input type="text" id="s2-citizen-id" name="citizen_id"
-               placeholder="Format: XX-BACK-XX"
-               autocomplete="off">
-      </div>
-
-      <div class="s2-field-group">
-        <label for="s2-purpose">Purpose of Visit</label>
-        <select id="s2-purpose" name="purpose">
-          <option value="">— Select One —</option>
-          <option value="complaining">Complaining</option>
-          <option value="more_complaining">More Complaining</option>
-          <option value="existential">Existential Dread</option>
-          <option value="dunno">I Don't Know Anymore</option>
-          <option value="other">Other (Form 28-C Required)</option>
-        </select>
-      </div>
-
-      <div class="s2-field-group">
-        <label for="s2-benefit-type">Benefit Type Requested</label>
-        <select id="s2-benefit-type" name="benefit">
-          <option value="">— Select Benefit (Subject to Availability) —</option>
-          <option>Standard Existence Allowance</option>
-          <option>Emergency Reality Subsidy</option>
-          <option>Dimensional Displacement Compensation</option>
-          <option>Form 22-A Completion Award (Unavailable)</option>
-        </select>
-      </div>
-
-      <div id="s2-checkbox-group">
-        <input type="checkbox" id="s2-exist-confirm" name="confirm_exist">
-        <label for="s2-exist-confirm">
-          I confirm that I exist in this reality, that my data is accurate to the best of my knowledge, and that I accept any consequences of this form including but not limited to temporal displacement, administrative archiving, or loss of physical form.
-        </label>
-      </div>
-
-      <!-- Submit button — drifts away -->
-      <button type="button" id="s2-submit-btn">SUBMIT FORM 27-B/6</button>
-
-    </form>
-  </div>
-
-  <!-- Footer -->
-  <footer id="s2-footer">
-    <p id="s2-footer-legal">© 1997–2024 GOVNET Administrative Services. Form 27-B/6 Rev 0.9.4 (Unstable). By clicking SUBMIT you agree that GOVNET accepts no liability for outcomes including but not limited to: loss of identity, incorrect dimensions, archived memory, or encounters with entities in restricted administrative zones. All fields are mandatory. No fields are sufficient.</p>
-  </footer>
-</section>
+    <!-- Footer -->
+    <footer id="s2-footer">
+      <p id="s2-footer-legal">© 1997–2024 GOVNET Administrative Services. Form 27-B/6 Rev 0.9.4 (Unstable). By clicking
+        SUBMIT you agree that GOVNET accepts no liability for outcomes including but not limited to: loss of identity,
+        incorrect dimensions, archived memory, or encounters with entities in restricted administrative zones. All
+        fields are mandatory. No fields are sufficient.</p>
+    </footer>
+  </section>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 3 — THE BACKROOMS (Level 0)
      ══════════════════════════════════════════════ -->
-<section id="stage3" class="stage">
+  <section id="stage3" class="stage">
 
-  <!-- Atmosphere effects -->
-  <div id="s3-pulse-overlay" aria-hidden="true"></div>
-  <div id="s3-distortion-bar" aria-hidden="true"></div>
-  <div id="s3-shadow-entity" aria-hidden="true"></div>
+    <!-- Atmosphere effects -->
+    <div id="s3-pulse-overlay" aria-hidden="true"></div>
+    <div id="s3-distortion-bar" aria-hidden="true"></div>
+    <div id="s3-shadow-entity" aria-hidden="true"></div>
 
-  <!-- Entity texts in corners -->
-  <span class="s3-entity-text" id="s3-entity-tl" aria-hidden="true"></span>
-  <span class="s3-entity-text" id="s3-entity-tr" aria-hidden="true"></span>
-  <span class="s3-entity-text" id="s3-entity-bl" aria-hidden="true"></span>
-  <span class="s3-entity-text" id="s3-entity-br" aria-hidden="true"></span>
+    <!-- Entity texts in corners -->
+    <span class="s3-entity-text" id="s3-entity-tl" aria-hidden="true"></span>
+    <span class="s3-entity-text" id="s3-entity-tr" aria-hidden="true"></span>
+    <span class="s3-entity-text" id="s3-entity-bl" aria-hidden="true"></span>
+    <span class="s3-entity-text" id="s3-entity-br" aria-hidden="true"></span>
 
-  <!-- Main content -->
-  <div id="s3-content" role="main">
-    <div id="s3-lines-container" aria-live="polite"></div>
-    <button id="s3-terminal-btn" aria-label="Access the classified terminal">
-      ACCESS THE TERMINAL →
-    </button>
-  </div>
-</section>
+    <!-- Main content -->
+    <div id="s3-content" role="main">
+      <div id="s3-lines-container" aria-live="polite"></div>
+      <button id="s3-terminal-btn" aria-label="Access the classified terminal">
+        ACCESS THE TERMINAL →
+      </button>
+    </div>
+  </section>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 4 — CRT TERMINAL (The Way Out)
      ══════════════════════════════════════════════ -->
-<section id="stage4" class="stage">
+  <section id="stage4" class="stage">
 
-  <!-- Error flash -->
-  <div id="s4-error-flash" aria-hidden="true"></div>
-  <!-- Static burst -->
-  <div id="s4-static" aria-hidden="true"></div>
+    <!-- Error flash -->
+    <div id="s4-error-flash" aria-hidden="true"></div>
+    <!-- Static burst -->
+    <div id="s4-static" aria-hidden="true"></div>
 
-  <div id="s4-terminal" role="main">
+    <div id="s4-terminal" role="main">
 
-    <!-- ASCII art header -->
-    <pre id="s4-ascii-header" aria-label="GOVNET Classified Terminal"></pre>
+      <!-- ASCII art header -->
+      <pre id="s4-ascii-header" aria-label="GOVNET Classified Terminal"></pre>
 
-    <!-- Status -->
-    <div class="s4-status-line">[STATUS: ISOLATED]</div>
-    <div class="s4-status-line">[LOCATION: SECTOR-NON-EUCLIDEAN]</div>
-    <div class="s4-status-line">[WARNING: VOID LEAK DETECTED IN LOCAL CONTEXT]</div>
+      <!-- Status -->
+      <div class="s4-status-line">[STATUS: ISOLATED]</div>
+      <div class="s4-status-line">[LOCATION: SECTOR-NON-EUCLIDEAN]</div>
+      <div class="s4-status-line">[WARNING: VOID LEAK DETECTED IN LOCAL CONTEXT]</div>
 
-    <!-- Boot log -->
-    <div id="s4-boot-lines" aria-live="polite"></div>
+      <!-- Boot log -->
+      <div id="s4-boot-lines" aria-live="polite"></div>
 
-    <!-- Output lines (typed by JS) -->
-    <div id="s4-output" aria-live="polite"></div>
+      <!-- Output lines (typed by JS) -->
+      <div id="s4-output" aria-live="polite"></div>
 
-    <!-- Entity nearby warning -->
-    <div id="s4-entity-msg" role="alert" aria-live="assertive"></div>
+      <!-- Entity nearby warning -->
+      <div id="s4-entity-msg" role="alert" aria-live="assertive"></div>
 
-    <!-- Wrong attempts counter -->
-    <div id="s4-attempts" aria-live="polite"></div>
+      <!-- Wrong attempts counter -->
+      <div id="s4-attempts" aria-live="polite"></div>
 
-    <!-- Unstable mode warning (shown after 3+ wrong attempts by trapped.js) -->
-    <div id="s4-unstable-warning" role="alert" aria-live="assertive"></div>
+      <!-- Unstable mode warning (shown after 3+ wrong attempts by trapped.js) -->
+      <div id="s4-unstable-warning" role="alert" aria-live="assertive"></div>
 
-    <!-- Input row (hidden until boot finishes) -->
-    <div id="s4-input-row" style="display:none;">
-      <span id="s4-prompt-label">&gt;&nbsp;</span>
-      <input
-        type="password"
-        id="s4-password-input"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="characters"
-        spellcheck="false"
-        maxlength="20"
-        aria-label="Enter escape code"
-        placeholder="ENTER CODE"
-      >
-      <span id="s4-cursor" aria-hidden="true"></span>
-      <button id="s4-enter-btn" aria-label="Submit code">ENTER</button>
+      <!-- Input row (hidden until boot finishes) -->
+      <div id="s4-input-row" style="display:none;">
+        <span id="s4-prompt-label">&gt;&nbsp;</span>
+        <input type="password" id="s4-password-input" autocomplete="off" autocorrect="off" autocapitalize="characters"
+          spellcheck="false" maxlength="20" aria-label="Enter escape code" placeholder="ENTER CODE">
+        <span id="s4-cursor" aria-hidden="true"></span>
+        <button id="s4-enter-btn" aria-label="Submit code">ENTER</button>
+      </div>
+
+      <!-- Hint -->
+      <div id="s4-hint" style="display:none;">
+        [HINT: THE CLUES WERE ALWAYS THERE — LOOK BACK AT THE BEGINNING]
+      </div>
+
     </div>
-
-    <!-- Hint -->
-    <div id="s4-hint" style="display:none;">
-      [HINT: THE CLUES WERE ALWAYS THERE — LOOK BACK AT THE BEGINNING]
-    </div>
-
-  </div>
-</section>
+  </section>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 5 — THE INFINITE MAZE (THE REAL TRAP)
      ══════════════════════════════════════════════ -->
-<section id="stage5" class="stage">
+  <section id="stage5" class="stage">
 
-  <!-- ── PRE-GAME RULES SCREEN ── -->
-  <div id="s5-rules">
-    <div id="s5-rules-text"></div>
+    <!-- ── PRE-GAME RULES SCREEN ── -->
+    <div id="s5-rules">
+      <div id="s5-rules-text"></div>
+    </div>
+
+    <!-- ── IN-GAME HUD ── -->
+    <div id="s5-hud" style="display:none;">
+      <span id="s5-hud-level">LEVEL: 1</span>
+      <span id="s5-hud-center">GOVNET RELOCATION PROTOCOL ACTIVE</span>
+      <span id="s5-hud-entities">ENTITIES: 1</span>
+    </div>
+
+    <!-- ── CANVAS ── -->
+    <div id="s5-canvas-wrap" style="display:none;">
+      <canvas id="s5-maze-canvas" aria-label="Backrooms Maze"></canvas>
+    </div>
+
+    <!-- ── LEVEL COMPLETE SCREEN ── -->
+    <div id="s5-level-complete" style="display:none;">
+      <div id="s5-lc-text"></div>
+    </div>
+
+    <!-- ── CATCH SCREEN ── -->
+    <div id="s5-catch-screen" style="display:none;">
+      <div id="s5-catch-text"></div>
+    </div>
+
+  </section>
+
+  <!-- Stage 5 overlays — fixed position, outside section for z-index -->
+  <div id="s5-overlay" aria-live="assertive">
+    <div id="s5-overlay-text"></div>
   </div>
-
-  <!-- ── IN-GAME HUD ── -->
-  <div id="s5-hud" style="display:none;">
-    <span id="s5-hud-level">LEVEL: 1</span>
-    <span id="s5-hud-center">GOVNET RELOCATION PROTOCOL ACTIVE</span>
-    <span id="s5-hud-entities">ENTITIES: 1</span>
-  </div>
-
-  <!-- ── CANVAS ── -->
-  <div id="s5-canvas-wrap" style="display:none;">
-    <canvas id="s5-maze-canvas" aria-label="Backrooms Maze"></canvas>
-  </div>
-
-  <!-- ── LEVEL COMPLETE SCREEN ── -->
-  <div id="s5-level-complete" style="display:none;">
-    <div id="s5-lc-text"></div>
-  </div>
-
-  <!-- ── CATCH SCREEN ── -->
-  <div id="s5-catch-screen" style="display:none;">
-    <div id="s5-catch-text"></div>
-  </div>
-
-</section>
-
-<!-- Stage 5 overlays — fixed position, outside section for z-index -->
-<div id="s5-overlay" aria-live="assertive">
-  <div id="s5-overlay-text"></div>
-</div>
-<div id="s5-static-burst" aria-hidden="true"></div>
-<div id="s5-flash" aria-hidden="true"></div>
-<div id="s5-fade-black" aria-hidden="true"></div>
+  <div id="s5-static-burst" aria-hidden="true"></div>
+  <div id="s5-flash" aria-hidden="true"></div>
+  <div id="s5-fade-black" aria-hidden="true"></div>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 6 — THE LORE CREDITS
      ══════════════════════════════════════════════ -->
-<section id="stage6" class="stage">
+  <section id="stage6" class="stage">
+    <div id="s6-credits-viewport">
+      <div id="s6-credits-scroll">
 
-  <div id="s6-credits-viewport">
-    <div id="s6-credits-scroll">
+        <div class="s6-block s6-ascii-block">
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    G O V N E T
+    CITIZEN SERVICES DIVISION
+    ESTABLISHED 1997
+    STILL OPERATIONAL
+    CITIZEN COUNT: UPDATING...
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+        </div>
 
-      <div class="s6-block s6-ascii-block">
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-  G O V N E T
-  CITIZEN SERVICES DIVISION
-  ESTABLISHED 1997
-  STILL OPERATIONAL
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+        <div class="s6-block s6-body">
+          You found the terminal.<br><br>
+          You entered the code.<br><br>
+          The screen said you were free.<br><br>
+          .<br><br>
+          ..<br><br>
+          ...<br><br>
+          The screen lied.<br><br>
+          It always lies.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-heading">THE BACKROOMS</div>
+
+        <div class="s6-block s6-body">
+          Level 0 — The Lobby.<br><br>
+          No beginning.<br>
+          No end.<br>
+          No ceiling high enough.<br>
+          No corridor short enough.<br><br>
+          Approximately 600,000,000 square miles<br>
+          of the same room.<br>
+          Repeated.<br>
+          Forever.<br><br>
+          The carpet is always slightly wet.<br>
+          You never find out why.<br><br>
+          The lights never turn off.<br>
+          You never find out why.<br><br>
+          Something is always<br>
+          in the next room.<br><br>
+          You never find out what.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-heading">KNOWN LEVELS</div>
+
+        <div class="s6-block s6-levels">
+          <span class="level-label">Level 0</span> ............ The Lobby<br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU ARE HERE]</span><br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU HAVE ALWAYS BEEN HERE]</span><br><br>
+
+          <span class="level-label">Level 1</span> ............ The Habitable Zone<br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DO NOT GO DEEPER]</span><br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU WILL GO DEEPER]</span><br><br>
+
+          <span class="level-label">Level 2</span> ............ Pipe Dreams<br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[SOMETHING LIVES IN THE PIPES]</span><br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[IT HAS BEEN LISTENING]</span><br><br>
+
+          <span class="level-label">Level !</span> ............ Run For Your Life<br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DO NOT STOP]</span><br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DO NOT LOOK BEHIND YOU]</span><br><br>
+
+          <span class="level-label">Level ∞</span> ............ GOVNET PORTAL v2.1<br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[WHERE YOU STARTED]</span><br>
+          <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[WHERE YOU WILL END]</span>
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-heading">CITIZENS LOST IN GOVNET</div>
+
+        <div class="s6-block s6-body">
+          Total count: 0000312<br><br>
+          Someone was here before you.<br>
+          They also found the terminal.<br>
+          They also entered the code.<br>
+          They also thought they escaped.<br><br>
+          We do not know where they are now.<br>
+          The system archived them.<br><br>
+          You are citizen 0000313.<br><br>
+          Welcome to the archive.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-emphasis">
+          If you are not careful —<br>
+          and you are never careful enough —<br><br>
+          you will noclip out of reality.<br><br>
+          Not with a bang.<br>
+          Not with a warning.<br>
+          Just a single wrong step<br>
+          in a familiar place.<br><br>
+          And then.<br><br>
+          The yellow.<br>
+          The carpet.<br>
+          The hum.<br><br>
+          Six hundred million square miles<br>
+          of the same empty room<br>
+          asking you the same question<br>
+          over and over and over —<br><br>
+          how did you get here.<br><br>
+          You will never have an answer.<br>
+          The room does not care.<br>
+          The room was here before you.<br>
+          The room will be here after.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-body">
+          This was never a government website.<br><br>
+          There is no Ministry of Citizen Services.<br><br>
+          There is no Form 27-B/6.<br><br>
+          There is no GOVNET.<br><br>
+          There is only the Backrooms.<br><br>
+          There has only ever been<br>
+          the Backrooms.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-body">
+          The exit does not exist.<br><br>
+          You knew this.<br><br>
+          You clicked anyway.<br><br>
+          That is the most human thing<br>
+          about this whole experience.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <!-- ★ EERIE HIGHLIGHT BLOCK ★ -->
+        <div class="s6-block s6-finale s6-highlight">
+          HAPPY APRIL FOOLS, CITIZEN.<br><br>
+          The prank was never the website.<br><br>
+          The prank was hope.<br><br>
+          We gave you a terminal.<br>
+          We gave you a password.<br>
+          We gave you the feeling<br>
+          of being one step close to reality.<br><br>
+          And you ran toward it.<br><br>
+          Every single time.<br><br>
+          ^_^
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-branding">
+          PRANKRAFT<br>
+          IEEE Computer Society<br>
+          SB GECT &amp; SB SCET<br><br>
+          A front-end experience.<br>
+          Built for a competition about deception.<br>
+          April 2026.<br><br>
+          Thank you for playing.<br>
+          We are sorry.<br>
+          We are not sorry.
+        </div>
+
+        <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+        <div class="s6-block s6-whisper">
+          [The hum continues.]<br><br>
+          [It has always continued.]<br><br>
+          [You were never not here.]<br><br>
+          [Close the tab.]<br><br>
+          [It will not help.]
+        </div>
+
+        <div class="s6-block s6-ascii-block">
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+        </div>
+
+        <div style="height: 60vh;"></div>
+
       </div>
-
-      <div class="s6-block s6-body">
-        You found the terminal.<br><br>
-        You entered the code.<br><br>
-        You thought you escaped.<br><br>
-        .<br><br>
-        ..<br><br>
-        ...<br><br>
-        You didn't.<br><br>
-        No one does.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-heading">THE BACKROOMS</div>
-
-      <div class="s6-block s6-body">
-        Level 0 — The Lobby<br><br>
-        Approximately 600,000,000 square miles<br>
-        of randomly segmented empty rooms.<br><br>
-        The smell of old moist carpet.<br>
-        The madness of mono-yellow.<br>
-        The endless hum of fluorescent lights<br>
-        at maximum buzz.<br><br>
-        God save you if you hear something<br>
-        wandering nearby.<br><br>
-        It has already heard you.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-heading">KNOWN LEVELS</div>
-
-      <div class="s6-block s6-levels">
-        <span class="level-label">Level 0</span> ............ The Lobby<br>
-        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU ARE HERE]</span><br><br>
-        <span class="level-label">Level 1</span> ............ The Habitable Zone<br>
-        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DO NOT GO DEEPER]</span><br><br>
-        <span class="level-label">Level 2</span> ............ Pipe Dreams<br>
-        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[THEY LIVE IN THE PIPES]</span><br><br>
-        <span class="level-label">Level !</span> ............ Run For Your Life<br>
-        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[SELF EXPLANATORY]</span><br><br>
-        <span class="level-label">Level ∞</span> ............ GOVNET PORTAL v2.1<br>
-        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU JUST CAME FROM HERE]</span>
-      </div>
-
-
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-heading">CITIZENS LOST IN GOVNET</div>
-
-      <div class="s6-block s6-body">
-        Total count: 0000313<br><br>
-        You are citizen 0000313.<br><br>
-        Your session has been archived.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-emphasis">
-        If you are not careful<br>
-        and you noclip out of reality<br>
-        in the wrong areas —<br><br>
-        you will end up in the Backrooms.<br><br>
-        Where it is nothing but<br>
-        the stink of old moist carpet,<br>
-        the madness of mono-yellow,<br>
-        the endless background noise<br>
-        of fluorescent lights<br>
-        at maximum hum-buzz,<br><br>
-        and approximately six hundred million<br>
-        square miles of randomly segmented<br>
-        empty rooms<br>
-        to be trapped in.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-body">
-        This was never a government website.<br><br>
-        This was never an escape room.<br><br>
-        There is no escape room.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-body">
-        The exit does not exist.<br><br>
-        It never did.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-finale">
-        HAPPY APRIL FOOLS, CITIZEN.<br><br>
-        You were always in the Backrooms.<br><br>
-        The joke was never the website.<br><br>
-        The joke was that you thought<br>
-        you could escape.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-branding">
-        PRANKRAFT<br>
-        IEEE Computer Society<br>
-        SB GECT &amp; SB SCET<br><br>
-        A front-end experience.<br>
-        Built for a competition about deception.<br>
-        April 2026.
-      </div>
-
-      <div class="s6-block s6-divider">─────────────────────────────────</div>
-
-      <div class="s6-block s6-whisper">
-        [The hum continues.]<br><br>
-        [It always continues.]<br><br>
-        [You are still here.]
-      </div>
-
-      <div class="s6-block s6-ascii-block">
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-      </div>
-
-      <!-- Extra spacing for scroll loop -->
-      <div style="height: 60vh;"></div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      STAGE 7 — THE ROOM (360 SPHERE)
      ══════════════════════════════════════════════ -->
-<section id="stage7" class="stage">
-  <div id="s7-renderer-wrap"></div>
-  <div id="s7-grain"      aria-hidden="true"></div>
-  <div id="s7-scanlines"  aria-hidden="true"></div>
-  <div id="s7-vignette"   aria-hidden="true"></div>
-  <div id="s7-fade"       aria-hidden="true"></div>
-</section>
+  <section id="stage7" class="stage">
+    <div id="s7-renderer-wrap"></div>
+    <div id="s7-grain" aria-hidden="true"></div>
+    <div id="s7-scanlines" aria-hidden="true"></div>
+    <div id="s7-vignette" aria-hidden="true"></div>
+    <div id="s7-fade" aria-hidden="true"></div>
+  </section>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      GLOBAL OVERLAYS
      ══════════════════════════════════════════════ -->
 
-<!-- Win95-style popup -->
-<div id="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-  <div id="popup-box">
-    <div id="popup-titlebar">
-      <span id="popup-title">GOVNET System Message</span>
-      <button id="popup-close" aria-label="Close">✕</button>
-    </div>
-    <div id="popup-body"></div>
-    <div style="text-align:center;padding-bottom:10px;">
-      <button id="popup-btn">OK</button>
+  <!-- Win95-style popup -->
+  <div id="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <div id="popup-box">
+      <div id="popup-titlebar">
+        <span id="popup-title">GOVNET System Message</span>
+        <button id="popup-close" aria-label="Close">✕</button>
+      </div>
+      <div id="popup-body"></div>
+      <div style="text-align:center;padding-bottom:10px;">
+        <button id="popup-btn">OK</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Flash overlay (black/red/white) -->
-<div id="flash-overlay" aria-hidden="true"></div>
+  <!-- Flash overlay (black/red/white) -->
+  <div id="flash-overlay" aria-hidden="true"></div>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      TRAPPED MODE ELEMENTS
      ══════════════════════════════════════════════ -->
 
-<!-- Fullscreen warning banner -->
-<div id="fullscreen-warning" role="status" aria-live="polite"></div>
+  <!-- Fullscreen warning banner -->
+  <div id="fullscreen-warning" role="status" aria-live="polite"></div>
 
-<!-- Dim flash for return effect -->
-<div id="trap-dim-flash" aria-hidden="true"></div>
+  <!-- Dim flash for return effect -->
+  <div id="trap-dim-flash" aria-hidden="true"></div>
 
-<!-- Trap overlay — shown when user leaves tab/focus during Stage 3 or 4 -->
-<div id="trap-overlay" role="alertdialog" aria-modal="true" aria-label="GOVNET Warning">
-  <div id="trap-main-msg"></div>
-  <div id="trap-sub-msg"></div>
-  <div id="trap-saw-msg"></div>
-  <div id="trap-return-hint">[CLICK OR PRESS ANY KEY TO CONTINUE]</div>
-</div>
+  <!-- Trap overlay — shown when user leaves tab/focus during Stage 3 or 4 -->
+  <div id="trap-overlay" role="alertdialog" aria-modal="true" aria-label="GOVNET Warning">
+    <div id="trap-main-msg"></div>
+    <div id="trap-sub-msg"></div>
+    <div id="trap-saw-msg"></div>
+    <div id="trap-return-hint">[CLICK OR PRESS ANY KEY TO CONTINUE]</div>
+  </div>
 
 
-<!-- ══════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════
      JAVASCRIPT — Load order matters
      ══════════════════════════════════════════════ -->
-<!-- Three.js (For Stage 7) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Three.js (For Stage 7) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<script src="js/main.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/stage1.js"></script>
-<script src="js/stage2.js"></script>
-<script src="js/stage3.js"></script>
-<script src="js/terminal.js"></script>
-<script src="js/stage5.js"></script>
-<script src="js/stage6.js"></script>
-<script src="js/stage7.js"></script>
-<script src="js/trapped.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/stage1.js"></script>
+  <script src="js/stage2.js"></script>
+  <script src="js/stage3.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/stage5.js"></script>
+  <script src="js/stage6.js"></script>
+  <script src="js/stage7.js"></script>
+  <script src="js/trapped.js"></script>
 
-<!-- Quick wire-ups for stage1 quick-access links -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const formLink = document.getElementById('s1-form-link');
-    if (formLink) {
-      formLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.goToStage(2);
-      });
-    }
-  });
-</script>
+  <!-- Quick wire-ups for stage1 quick-access links -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const formLink = document.getElementById('s1-form-link');
+      if (formLink) {
+        formLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.goToStage(2);
+        });
+      }
+    });
+  </script>
 
 </body>
+
 </html>

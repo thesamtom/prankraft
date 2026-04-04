@@ -180,7 +180,7 @@ function triggerStage7Glitch() {
     if (window.GOVNET && typeof window.goToStage === 'function') {
       window.goToStage(7);
     }
-  }, 700);
+  }, 450);
 }
 
 // ---- STAGE 6 ENTRY ----
@@ -188,11 +188,11 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
   if (detail.stage === 6) {
     initDrone();
 
-    // Restore the 88s delay to allow the credits to roll fully.
-    // The "instant glitch" will trigger the moment the credits finish.
+    // The "instant glitch" will now trigger at the 100s mark, 
+    // aligned with the branding block during the slower 110s scroll.
     s6TransitionTimeout = setTimeout(() => {
       triggerStage7Glitch();
-    }, 88000);
+    }, 100000);
   } else {
     // Cleanup Stage 6
     if (s6TransitionTimeout) {

@@ -71,7 +71,7 @@
   width: 100%;
   text-align: center;
   padding: 40px 20px;
-  animation: creditsScroll 90s linear infinite;
+  animation: creditsScroll 110s linear forwards;
 }
 
 @keyframes creditsScroll {
@@ -187,4 +187,43 @@
       rgba(0,0,0,0.4) 100%
     ),
     #000000;
+}
+
+/* ---- Eerie Highlight Block ---- */
+.s6-highlight {
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px rgba(0, 255, 65, 0.8),
+    0 0 20px rgba(0, 255, 65, 0.4),
+    0 0 40px rgba(0, 255, 65, 0.2);
+  font-size: 1.15em;
+  letter-spacing: 3px;
+  line-height: 2.2;
+  animation: 
+    eerieGlow 2.5s ease-in-out infinite alternate,
+    eerieFlicker 6s steps(1) infinite;
+  padding: 40px 20px;
+  border-top: 1px solid rgba(0, 255, 65, 0.2);
+  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+@keyframes eerieGlow {
+  from {
+    text-shadow:
+      0 0 8px rgba(0, 255, 65, 0.6),
+      0 0 16px rgba(0, 255, 65, 0.3);
+    color: #ccffcc;
+  }
+  to {
+    text-shadow:
+      0 0 16px rgba(0, 255, 65, 1),
+      0 0 32px rgba(0, 255, 65, 0.6),
+      0 0 60px rgba(0, 255, 65, 0.3);
+    color: #ffffff;
+  }
+}
+
+@keyframes eerieFlicker {
+  0%, 95%, 97%, 100% { opacity: 1; }
+  96%                { opacity: 0.4; }
 }
