@@ -35,6 +35,19 @@ const OVERLAY_MESSAGES_S4 = [
   { main: 'WRONG DIRECTION, CITIZEN.',     sub: 'THE EXIT IS BEHIND THE TERMINAL' },
 ];
 
+const OVERLAY_MESSAGES_S5 = [
+  { main: 'THE MAZE IS STILL HERE.',       sub: 'SO ARE THEY' },
+  { main: 'YOU CANNOT PAUSE THIS.',        sub: 'THE ENTITIES DO NOT STOP' },
+  { main: 'WHERE DID YOU GO?',             sub: 'THEY MOVED WHILE YOU WERE GONE' },
+  { main: 'THE BACKROOMS HAVE NO ALT-TAB.',sub: 'RETURN TO THE MAZE' },
+];
+
+const OVERLAY_MESSAGES_S6 = [
+  { main: 'THE CREDITS ARE STILL ROLLING.',sub: 'THEY ALWAYS WILL BE' },
+  { main: 'THERE IS NOTHING OUT THERE.',   sub: 'ONLY THE HUM REMAINS' },
+  { main: 'YOU CANNOT LEAVE THE ARCHIVE.', sub: 'YOUR SESSION IS PERMANENT' },
+];
+
 const SAW_YOU_MESSAGES = [
   'WE SAW YOU LEAVE.',
   'YOU WERE GONE. WE NOTICED.',
@@ -74,18 +87,25 @@ function requestFullscreen() {
   const req = el.requestFullscreen || el.webkitRequestFullscreen ||
               el.mozRequestFullScreen || el.msRequestFullscreen;
   if (req) {
-    req.call(el).catch(() => {
-      // User denied fullscreen
-      TRAP.fullscreenDenied = true;
-      if (fullscreenWarning) {
-        fullscreenWarning.textContent =
-          '⚠ WARNING: FULL IMMERSION MODE REQUIRED FOR CITIZEN SAFETY — ' +
-          'GOVNET RECOMMENDS FULLSCREEN. COMPLIANCE IS ENCOURAGED.';
-        fullscreenWarning.classList.add('show');
-        // Auto-hide after 8 seconds
-        setTimeout(() => fullscreenWarning.classList.remove('show'), 8000);
+    try {
+      const promise = req.call(el);
+      if (promise && promise.then) {
+        promise.then(() => {
+          // KEYBOARD LOCK: Completely disables Esc key from exiting fullscreen (Chrome/Edge)!
+          if (navigator.keyboard && navigator.keyboard.lock) {
+            navigator.keyboard.lock(['Escape']).catch(()=>{});
+          }
+        }).catch(() => {
+          TRAP.fullscreenDenied = true;
+          if (fullscreenWarning) {
+            fullscreenWarning.textContent =
+              '⚠ WARNING: FULL IMMERSION MODE REQUIRED FOR CITIZEN SAFETY — GOVNET RECOMMENDS FULLSCREEN. COMPLIANCE IS ENCOURAGED.';
+            fullscreenWarning.classList.add('show');
+            setTimeout(() => fullscreenWarning.classList.remove('show'), 8000);
+          }
+        });
       }
-    });
+    } catch (e) {}
   }
 }
 
@@ -105,7 +125,10 @@ function showTrapOverlay(stage) {
   TRAP.overlayVisible = true;
   TRAP.lastLeaveTime  = Date.now();
 
-  const msgs = stage === 4 ? OVERLAY_MESSAGES_S4 : OVERLAY_MESSAGES_S3;
+  const msgs = stage === 6 ? OVERLAY_MESSAGES_S6
+             : stage === 5 ? OVERLAY_MESSAGES_S5
+             : stage === 4 ? OVERLAY_MESSAGES_S4
+             : OVERLAY_MESSAGES_S3;
   const pick = msgs[Math.floor(Math.random() * msgs.length)];
 
   trapMainMsg.textContent = pick.main;
@@ -327,13 +350,47 @@ function setupFullscreenListeners() {
       document.mozFullScreenElement
     );
     if (!isFullscreen && TRAP.active) {
-      // User pressed Escape to exit fullscreen
-      if (fullscreenWarning) {
-        fullscreenWarning.textContent =
-          '⚠ GOVNET IMMERSION MODE DISENGAGED — ' +
-          'CITIZEN SAFETY IS REDUCED OUTSIDE FULLSCREEN MODE.';
-        fullscreenWarning.classList.add('show');
-        setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);
+      if (TRAP.stage >= 3) {
+         // Drop the trap overlay
+         showTrapOverlay(TRAP.stage);
+         if (trapMainMsg) trapMainMsg.textContent = 'DO NOT ATTEMPT TO ESCAPE.';
+         if (trapSubMsg) trapSubMsg.textContent = 'THE BACKROOMS ARE NOW YOUR HOME.';
+
+         // Aggressively attempt to re-enter fullscreen immediately.
+         requestFullscreen();
+         
+         // Hammer it. Some browsers grant it eventually if a gesture token hangs around.
+         const slamInterval = setInterval(() => {
+           if (!TRAP.active) return clearInterval(slamInterval);
+           const currentlyFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+           if (currentlyFS) {
+             clearInterval(slamInterval);
+             setTimeout(hideTrapOverlay, 800);
+           } else {
+             requestFullscreen();
+           }
+         }, 400);
+
+         // The instant they touch the mouse or press any key, they give us a gesture token.
+         // Snap them back into the nightmare.
+         const instantReEnter = () => {
+             const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+             if (!isFS) requestFullscreen();
+             document.removeEventListener('keydown', instantReEnter);
+             document.removeEventListener('mousemove', instantReEnter);
+         };
+         document.addEventListener('keydown', instantReEnter);
+         document.addEventListener('mousemove', instantReEnter);
+
+      } else {
+         // Stage 1/2 just shows a warning
+         if (fullscreenWarning) {
+           fullscreenWarning.textContent =
+             '⚠ GOVNET IMMERSION MODE DISENGAGED — ' +
+             'CITIZEN SAFETY IS REDUCED OUTSIDE FULLSCREEN MODE.';
+           fullscreenWarning.classList.add('show');
+           setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);
+         }
       }
     }
   };
@@ -449,8 +506,18 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
     TRAP.active = true;
     TRAP.stage  = 4;
     TRAP.tabSwitchCount4 = 0;
+  } else if (detail.stage === 5) {
+    // Keep trap active through the maze
+    TRAP.active = true;
+    TRAP.stage  = 5;
+    requestFullscreen();
+  } else if (detail.stage === 6) {
+    // Keep trap active through credits — no escape
+    TRAP.active = true;
+    TRAP.stage  = 6;
+    requestFullscreen();
   } else {
-    // Stage 1, 2, 5 — no trap
+    // Stage 1, 2 — no trap
     deactivateTrap();
   }
 });

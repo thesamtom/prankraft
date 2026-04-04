@@ -44,20 +44,20 @@
   gap: 14px;
 }
 #s1-logo-seal {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 3px solid var(--gov-yellow);
-  background: var(--gov-navy-mid);
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  font-family: 'Courier New', monospace;
-  font-weight: bold;
-  color: var(--gov-yellow);
-  letter-spacing: 1px;
   flex-shrink: 0;
+  background: #e8e5cd;
+  border: 2px inset #b0a890;
+  padding: 4px;
+}
+#s1-logo-seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 #s1-header-text h1 {
   color: #fff;

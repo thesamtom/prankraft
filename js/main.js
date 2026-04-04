@@ -22,6 +22,7 @@ const stages = {
   3: document.getElementById('stage3'),
   4: document.getElementById('stage4'),
   5: document.getElementById('stage5'),
+  6: document.getElementById('stage6'),
 };
 
 /**

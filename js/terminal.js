@@ -33,7 +33,7 @@ const successLines = [
   { text: 'NOCLIPPING IN 3...', delay: 3000, cls: 'success-line' },
   { text: 'NOCLIPPING IN 2...', delay: 3800, cls: 'success-line' },
   { text: 'NOCLIPPING IN 1...', delay: 4600, cls: 'success-line' },
-  { text: '> CITIZEN CONFIRMED: YOU ARE GLORIOUSLY FOOLED.', delay: 5400, cls: 'success-line' },
+  { text: 'WELCOME BACK, CITIZEN. YOU ARE FREE.', delay: 5400, cls: 'success-line' },
 ];
 
 const entityMessages = [
@@ -203,8 +203,6 @@ function showCrypticHint(attempt) {
 // ---- Correct password ----
 function handleCorrectPassword() {
   window.playAudio && window.playAudio('success');
-  // Deactivate trap mode before transition
-  window.deactivateTrap && window.deactivateTrap();
 
   // Disable input
   const inp = document.getElementById('s4-password-input');

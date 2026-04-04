@@ -87,6 +87,55 @@ function scheduleCounterGlitch() {
   setTimeout(doCounterGlitch, delay);
 }
 
+// ---- Header Glitch ----
+// Aggressively glitch the main portal header every ~10s
+function doHeaderGlitch() {
+  if (window.GOVNET.currentStage !== 1) return scheduleHeaderGlitch();
+
+  const h1 = document.querySelector('#s1-header-text h1');
+  if (!h1) return scheduleHeaderGlitch();
+
+  const originalText = 'GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES';
+
+  // Phase 1: scramble 
+  h1.style.color = '#ff0000';
+  h1.style.fontFamily = "'Courier New', monospace";
+  h1.textContent = randomNoise(originalText.length);
+  // Add some skewed glitch via transform if possible
+  h1.style.transform = 'skewX(10deg)';
+
+  // Phase 2: BACKROOMS
+  setTimeout(() => {
+    h1.textContent = 'BACKROOMS BACKROOMS BACKROOMS';
+    h1.style.color = '#ffff00';
+    h1.style.letterSpacing = '8px';
+    h1.style.transform = 'skewX(-15deg)';
+  }, 100);
+
+  // Phase 3: Scramble again
+  setTimeout(() => {
+    h1.textContent = randomNoise(originalText.length);
+    h1.style.color = '#ff0';
+    h1.style.letterSpacing = '2px';
+    h1.style.transform = 'skewX(5deg)';
+  }, 400);
+
+  // Phase 4: Restore
+  setTimeout(() => {
+    h1.textContent = originalText;
+    h1.style.color = '';
+    h1.style.fontFamily = '';
+    h1.style.letterSpacing = '';
+    h1.style.transform = '';
+    scheduleHeaderGlitch();
+  }, 500);
+}
+
+function scheduleHeaderGlitch() {
+  const delay = 10000; // 10 seconds exactly per requirement
+  setTimeout(doHeaderGlitch, delay);
+}
+
 // ---- Dead Nav Link Popups ----
 function initNavLinks() {
   const handlers = {
@@ -201,4 +250,5 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
   initNavLinks();
   initJitter();
   initTicker();
+  scheduleHeaderGlitch(); // start aggressive header glitch
 });

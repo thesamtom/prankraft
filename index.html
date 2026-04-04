@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="css/stage3.css">
   <link rel="stylesheet" href="css/stage4.css">
   <link rel="stylesheet" href="css/stage5.css">
+  <link rel="stylesheet" href="css/stage6.css">
   <link rel="stylesheet" href="css/trapped.css">
 </head>
 <body>
@@ -47,7 +48,9 @@
 
   <!-- Header -->
   <div id="s1-header">
-    <div id="s1-logo-seal" aria-hidden="true">[GOV]</div>
+    <div id="s1-logo-seal">
+      <img src="assets/async-logo.png" alt="MINISTRY SEAL">
+    </div>
     <div id="s1-header-text">
       <h1>GOVNET PORTAL v2.1 — MINISTRY OF CITIZEN SERVICES</h1>
       <p>Established 1997 &nbsp;|&nbsp; Fully Certified &nbsp;|&nbsp; Definitely Secure &nbsp;|&nbsp; SSL: Pending (Since 2001)</p>
@@ -203,8 +206,7 @@
 
     <!-- Slightly wrong government image -->
     <div id="s2-gov-img" aria-hidden="true">
-      [IMG]<br>
-      <span style="font-size:9px">MINISTRY SEAL<br>[IMAGE FORMAT UNSUPPORTED]</span>
+      <img src="assets/async-logo.png" alt="ASYNC Logo">
     </div>
 
     <!-- The actual form -->
@@ -356,75 +358,203 @@
 
 
 <!-- ══════════════════════════════════════════════
-     STAGE 5 — THE ESCAPE / APRIL FOOLS REVEAL
+     STAGE 5 — THE INFINITE MAZE (THE REAL TRAP)
      ══════════════════════════════════════════════ -->
 <section id="stage5" class="stage">
 
-  <!-- Particles background -->
-  <div id="s5-particles" aria-hidden="true"></div>
-
-  <!-- Confetti canvas -->
-  <canvas id="s5-confetti-canvas" aria-hidden="true"></canvas>
-
-  <div id="s5-content" role="main">
-
-    <!-- Top badge -->
-    <div id="s5-badge">[ PRANKRAFT 2026 — IEEE COMPUTER SOCIETY ]</div>
-
-    <!-- Emoji -->
-    <div id="s5-emoji" aria-hidden="true">😂</div>
-
-    <!-- Main title -->
-    <h1 id="s5-title">YOU ESCAPED THE BACKROOMS.</h1>
-
-    <!-- Subtext -->
-    <p id="s5-subtext">
-      <strong>GOVNET was never real.</strong><br>
-      The Backrooms were always just a website.<br>
-      But you made it out, Citizen. That took actual cleverness.<br>
-      <em>April Fools — from Prankraft, IEEE Computer Society SB GECT &amp; SCET.</em>
-    </p>
-
-    <div class="s5-divider" aria-hidden="true"></div>
-
-    <!-- Escape time -->
-    <div id="s5-time-display" aria-live="polite">
-      TIME: &nbsp;<span id="s5-timer-value">calculating...</span>
-    </div>
-
-    <!-- Certificate -->
-    <div id="s5-certificate" role="complementary" aria-label="Certificate of Reality Restoration">
-      <div id="s5-cert-title">Certificate of Reality Restoration</div>
-      <div id="s5-cert-subtitle">Issued by the GOVNET Recovery Authority</div>
-      <div id="s5-cert-body">
-        This document officially certifies that<br>
-        <strong>CITIZEN #<span id="s5-cert-citizen-id">????</span></strong><br>
-        successfully noclipped back to reality after surviving<br>
-        GOVNET Level 0 on <strong>April Fools Day, 2026</strong>.<br>
-        <br>
-        Escape time: <strong><span id="s5-cert-time">??</span></strong>.<br>
-        Molecular integrity: 100%.&nbsp; Reality status: Restored.
-      </div>
-      <div id="s5-cert-seal" aria-hidden="true">★</div>
-    </div>
-
-    <!-- Share button -->
-    <button id="s5-share-btn">[ Share Your Escape ]</button>
-
-    <div class="s5-divider" aria-hidden="true"></div>
-
-    <p style="font-size:13px;color:#666;margin-top:8px;">
-      Built for <strong>Prankraft</strong> — A front-end web design competition by<br>
-      <strong>IEEE Computer Society SB GECT &amp; SCET</strong> · April 2026<br>
-      <em>Password was: BACKROOMS — Did you figure it out from the clues?</em>
-    </p>
+  <!-- ── PRE-GAME RULES SCREEN ── -->
+  <div id="s5-rules">
+    <div id="s5-rules-text"></div>
   </div>
 
-  <!-- Footer branding -->
-  <footer id="s5-footer" role="contentinfo">
-    <div id="s5-footer-logo">PRANKRAFT 2026</div>
-    <div id="s5-footer-sub">IEEE Computer Society SB GECT &amp; SCET &nbsp;·&nbsp; GOVNET Backrooms Escape &nbsp;·&nbsp; April Fools</div>
-  </footer>
+  <!-- ── IN-GAME HUD ── -->
+  <div id="s5-hud" style="display:none;">
+    <span id="s5-hud-level">LEVEL: 1</span>
+    <span id="s5-hud-center">GOVNET RELOCATION PROTOCOL ACTIVE</span>
+    <span id="s5-hud-entities">ENTITIES: 1</span>
+  </div>
+
+  <!-- ── CANVAS ── -->
+  <div id="s5-canvas-wrap" style="display:none;">
+    <canvas id="s5-maze-canvas" aria-label="Backrooms Maze"></canvas>
+  </div>
+
+  <!-- ── LEVEL COMPLETE SCREEN ── -->
+  <div id="s5-level-complete" style="display:none;">
+    <div id="s5-lc-text"></div>
+  </div>
+
+  <!-- ── CATCH SCREEN ── -->
+  <div id="s5-catch-screen" style="display:none;">
+    <div id="s5-catch-text"></div>
+  </div>
+
+</section>
+
+<!-- Stage 5 overlays — fixed position, outside section for z-index -->
+<div id="s5-overlay" aria-live="assertive">
+  <div id="s5-overlay-text"></div>
+</div>
+<div id="s5-static-burst" aria-hidden="true"></div>
+<div id="s5-flash" aria-hidden="true"></div>
+<div id="s5-fade-black" aria-hidden="true"></div>
+
+
+<!-- ══════════════════════════════════════════════
+     STAGE 6 — THE LORE CREDITS
+     ══════════════════════════════════════════════ -->
+<section id="stage6" class="stage">
+
+  <div id="s6-credits-viewport">
+    <div id="s6-credits-scroll">
+
+      <div class="s6-block s6-ascii-block">
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+  G O V N E T
+  CITIZEN SERVICES DIVISION
+  ESTABLISHED 1997
+  STILL OPERATIONAL
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+      </div>
+
+      <div class="s6-block s6-body">
+        You found the terminal.<br><br>
+        You entered the code.<br><br>
+        You thought you escaped.<br><br>
+        .<br><br>
+        ..<br><br>
+        ...<br><br>
+        You didn't.<br><br>
+        No one does.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-heading">THE BACKROOMS</div>
+
+      <div class="s6-block s6-body">
+        Level 0 — The Lobby<br><br>
+        Approximately 600,000,000 square miles<br>
+        of randomly segmented empty rooms.<br><br>
+        The smell of old moist carpet.<br>
+        The madness of mono-yellow.<br>
+        The endless hum of fluorescent lights<br>
+        at maximum buzz.<br><br>
+        God save you if you hear something<br>
+        wandering nearby.<br><br>
+        It has already heard you.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-heading">KNOWN LEVELS</div>
+
+      <div class="s6-block s6-levels">
+        <span class="level-label">Level 0</span> ............ The Lobby<br>
+        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU ARE HERE]</span><br><br>
+        <span class="level-label">Level 1</span> ............ The Habitable Zone<br>
+        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DO NOT GO DEEPER]</span><br><br>
+        <span class="level-label">Level 2</span> ............ Pipe Dreams<br>
+        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[THEY LIVE IN THE PIPES]</span><br><br>
+        <span class="level-label">Level !</span> ............ Run For Your Life<br>
+        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[SELF EXPLANATORY]</span><br><br>
+        <span class="level-label">Level ∞</span> ............ GOVNET PORTAL v2.1<br>
+        <span class="level-note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[YOU JUST CAME FROM HERE]</span>
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-heading">ENTITIES ENCOUNTERED<br>DURING YOUR SESSION</div>
+
+      <div class="s6-block s6-body">
+        The Manager ............. confirmed<br>
+        The Auditor ............. confirmed<br>
+        The Intern .............. confirmed<br>
+        The Entity .............. [REDACTED]
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-heading">CITIZENS LOST IN GOVNET</div>
+
+      <div class="s6-block s6-body">
+        Total count: 0000313<br><br>
+        You are citizen 0000313.<br><br>
+        Your session has been archived.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-emphasis">
+        If you are not careful<br>
+        and you noclip out of reality<br>
+        in the wrong areas —<br><br>
+        you will end up in the Backrooms.<br><br>
+        Where it is nothing but<br>
+        the stink of old moist carpet,<br>
+        the madness of mono-yellow,<br>
+        the endless background noise<br>
+        of fluorescent lights<br>
+        at maximum hum-buzz,<br><br>
+        and approximately six hundred million<br>
+        square miles of randomly segmented<br>
+        empty rooms<br>
+        to be trapped in.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-body">
+        This was never a government website.<br><br>
+        This was never an escape room.<br><br>
+        There is no escape room.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-body">
+        The exit does not exist.<br><br>
+        It never did.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-finale">
+        HAPPY APRIL FOOLS, CITIZEN.<br><br>
+        You were always in the Backrooms.<br><br>
+        The joke was never the website.<br><br>
+        The joke was that you thought<br>
+        you could escape.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-branding">
+        PRANKRAFT<br>
+        IEEE Computer Society<br>
+        SB GECT &amp; SB SCET<br><br>
+        A front-end experience.<br>
+        Built for a competition about deception.<br>
+        April 2026.
+      </div>
+
+      <div class="s6-block s6-divider">─────────────────────────────────</div>
+
+      <div class="s6-block s6-whisper">
+        [The hum continues.]<br><br>
+        [It always continues.]<br><br>
+        [You are still here.]
+      </div>
+
+      <div class="s6-block s6-ascii-block">
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+      </div>
+
+      <!-- Extra spacing for scroll loop -->
+      <div style="height: 60vh;"></div>
+
+    </div>
+  </div>
 </section>
 
 
@@ -479,6 +609,7 @@
 <script src="js/stage3.js"></script>
 <script src="js/terminal.js"></script>
 <script src="js/stage5.js"></script>
+<script src="js/stage6.js"></script>
 <script src="js/trapped.js"></script>
 
 <!-- Quick wire-ups for stage1 quick-access links -->
