@@ -10,7 +10,8 @@ let droneCtx = null;
 let droneOsc = null;
 let droneLfo = null;
 let droneMasterGain = null;
-let noiseInterval = null;
+let s6TransitionTimeout = null;
+let s6VolumeTimeout = null;
 
 /* ---- Stage 6 Pause / Resume ---- */
 let s6PauseTime       = null;  // Date.now() when paused
@@ -22,13 +23,23 @@ window.pauseStage6 = function () {
   const el = document.getElementById('s6-credits-scroll');
   if (el) el.style.animationPlayState = 'paused';
 
-  // 2. Freeze the auto-transition timer
+  // 2. Freeze timers
   if (s6TransitionTimeout) {
     clearTimeout(s6TransitionTimeout);
     s6TransitionTimeout = null;
   }
+  if (s6VolumeTimeout) {
+    clearTimeout(s6VolumeTimeout);
+    s6VolumeTimeout = null;
+  }
   s6PauseTime = Date.now();
   s6ElapsedBeforePause += s6PauseTime - (window._s6EntryTime || s6PauseTime);
+
+  // If already ramping, we need to cancel any current AudioParam ramps
+  if (droneMasterGain && droneCtx) {
+    droneMasterGain.gain.cancelScheduledValues(droneCtx.currentTime);
+    droneMasterGain.gain.setValueAtTime(droneMasterGain.gain.value, droneCtx.currentTime);
+  }
 };
 
 window.resumeStage6 = function () {
@@ -36,17 +47,30 @@ window.resumeStage6 = function () {
   const el = document.getElementById('s6-credits-scroll');
   if (el) el.style.animationPlayState = 'running';
 
-  // 2. Restart transition timer with remaining time
-  const remaining = s6TransitionTotal - s6ElapsedBeforePause;
+  // 2. Restart timers
+  const remainingTransition = s6TransitionTotal - s6ElapsedBeforePause;
+  // Volume ramp starts at 145s (35s before 180s glitch)
+  const volRampStart = 145000;
+  const remainingVolume = volRampStart - s6ElapsedBeforePause;
+
   window._s6EntryTime = Date.now();
   s6PauseTime = null;
 
-  if (remaining > 0) {
+  if (remainingTransition > 0) {
     s6TransitionTimeout = setTimeout(() => {
       triggerStage7Glitch();
-    }, remaining);
+    }, remainingTransition);
   } else {
     triggerStage7Glitch();
+  }
+
+  if (remainingVolume > 0) {
+    s6VolumeTimeout = setTimeout(() => {
+      startExponentialVolumeRamp();
+    }, remainingVolume);
+  } else if (remainingTransition > 0) {
+    // Already passed 145s, start ramp immediately with dynamic target
+    startExponentialVolumeRamp();
   }
 };
 
@@ -137,7 +161,34 @@ function playNoiseBurst() {
   src.stop(droneCtx.currentTime + duration + 0.01);
 }
 
-let s6TransitionTimeout = null;
+function startExponentialVolumeRamp() {
+  if (!droneMasterGain || !droneCtx) return;
+
+  const now = droneCtx.currentTime;
+  // Calculate remaining time until the 180s glitch
+  const remainingMs = s6TransitionTotal - s6ElapsedBeforePause;
+  if (remainingMs <= 0) return;
+
+  const duration = remainingMs / 1000;
+
+  // exponentialRampToValueAtTime requires a value > 0
+  const currentVal = Math.max(droneMasterGain.gain.value, 0.001);
+  droneMasterGain.gain.cancelScheduledValues(now);
+  droneMasterGain.gain.setValueAtTime(currentVal, now);
+  // Hum of the fluorescent lights becomes unbearable
+  droneMasterGain.gain.exponentialRampToValueAtTime(1.8, now + duration);
+  
+  // Also increase the warble intensity
+  if (droneOsc && droneCtx) {
+    try {
+      // Modulate frequency slightly up as tension rises
+      droneOsc.frequency.linearRampToValueAtTime(74, now + duration);
+    } catch(e) {}
+  }
+}
+
+// (Ramp logic startVolumeRamp is above)
+
 
 // ---- GLITCH TRANSITION TO STAGE 7 ----
 function triggerStage7Glitch() {
@@ -238,6 +289,11 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
     s6TransitionTimeout = setTimeout(() => {
       triggerStage7Glitch();
     }, s6TransitionTotal);
+
+    // Volume ramp starts at 145s (35s before 180s glitch)
+    s6VolumeTimeout = setTimeout(() => {
+      startExponentialVolumeRamp();
+    }, 145000);
   } else {
     // Cleanup Stage 6
     if (s6TransitionTimeout) {
@@ -247,6 +303,10 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
     if (noiseInterval) {
       clearTimeout(noiseInterval);
       noiseInterval = null;
+    }
+    if (s6VolumeTimeout) {
+      clearTimeout(s6VolumeTimeout);
+      s6VolumeTimeout = null;
     }
     // Reset pause state
     s6ElapsedBeforePause = 0;
