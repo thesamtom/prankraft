@@ -1031,7 +1031,7 @@ function _s5ContinueScroll() {
   if (!_s5RulesDiv || !_s5TextDiv) return;
   function scrollStep() {
     if (window._s5ScrollPaused || window.GOVNET.paused) return; // safety
-    _s5ScrollY -= 0.6;
+    _s5ScrollY -= 0.3;
     _s5TextDiv.style.transform = `translateY(${_s5ScrollY}px)`;
     const rect = _s5TextDiv.getBoundingClientRect();
     if (rect.bottom < 0) {

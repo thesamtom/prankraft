@@ -81,30 +81,24 @@
       <main id="s1-main">
         <h2>Welcome to the Official GOVNET Citizen Services Portal</h2>
         <p>
-          You have reached the <strong>primary processing hub</strong> for the Ministry of Citizen Services,
-          Administrative Services Division. This portal provides access to all government services, forms, and
-          complaints that are available to registered citizens.
+          You have reached the <strong>primary processing node</strong> for the Ministry of Citizen Services,
+          Administrative Services Bureau. In accordance with the Digital Citizen Compliance Act of 1996, this centralized portal serves as the officially designated access point for digital administrative filing, cross-departmental grievances, and bureaucratic inquiry.
         </p>
         <p>
-          Please ensure your Citizen Identification Number (CIN) is clearly displayed in your physical documents at all
-          times when interacting with this portal. Failure to present CIN upon request is punishable under Directive
-          03-A.
+          Pursuant to Directive 402, Section B, all accessing citizens must possess a valid, government-issued Citizen Identification Number prior to digital submission. Effective since always, failure to maintain documented identity status may result in delayed processing, monetary penalization, or administrative archiving.
         </p>
 
         <div class="pixel-divider" role="separator"></div>
 
         <h2>Latest Government Announcements</h2>
         <p>
-          [*] <strong>NOTICE (Updated: 1997):</strong> All citizens must complete Form 22-B before accessing Form 22-A.
-          Form 22-B is contingent upon Form 22-C approval which requires Form 22-A to be submitted first.
+          [*] <strong>NOTICE (Updated: Nov 2002):</strong> In accordance with recent procedural amendments, all citizens must successfully file Form 22-B (Declaration of Residency) prior to requesting Form 22-A (Proof of Residency). Please note that processing of Form 22-B is currently suspended pending the verification of an approved Form 22-A. Please allow 6-8 weeks for processing.
         </p>
         <p>
-          [!] <strong>ALERT:</strong> The sub-basement ventilation system will be offline for maintenance. Citizens are
-          advised to avoid Level -3 through Level -&infin;. Do not enter if you hear humming.
+          [!] <strong>FACILITIES ALERT:</strong> Routine HVAC maintenance, fluorescent lighting replacement, and environmental recalibration will be occurring in the secondary administrative sectors starting Monday. Citizens and staff are strongly advised not to use the lower transitional corridors during this period, and to avoid Sub-Level 0 entirely.
         </p>
         <p>
-          [>] <strong>REMINDER:</strong> Per Directive 09-X, all citizens must immediately report any unusual audio
-          frequencies, visual distortions, or doors that were not there yesterday. Report using Form 77-X (unavailable).
+          [>] <strong>COMPLIANCE REMINDER:</strong> Pursuant to Workplace Health & Safety Regulation 18-C, all personnel and visiting citizens are required to promptly report any facility hazards using Form 73 (currently unavailable). This includes exposed wiring, excessive dampness, structural concerns, or sudden changes to corridor layout.
         </p>
 
         <div class="pixel-divider" role="separator"></div>
@@ -113,15 +107,15 @@
         <div id="s1-services">
           <h3>[ QUICK ACCESS ] — Citizen Services</h3>
           <ul>
-            <li><a href="#" id="s1-form-link">Form 27-B/6: Citizen Benefit Application</a></li>
-            <li><a href="#" onclick="document.getElementById('nav-complaint').click(); return false;">File a Complaint
-                (Form 404-B required)</a></li>
-            <li><a href="#" onclick="document.getElementById('nav-tax').click(); return false;">Tax Payment Portal
-                (Server down since 2003)</a></li>
-            <li><a href="#" onclick="document.getElementById('nav-services').click(); return false;">Citizen ID Renewal
-                (Appointment required)</a></li>
+            <li><a href="#" id="s1-form-link">Form 27-B/6: Standard Citizen Benefit Application</a></li>
+            <li><a href="#" onclick="document.getElementById('nav-complaint').click(); return false;">File a Formal Grievance
+                (Notarized Form 40-A required)</a></li>
+            <li><a href="#" onclick="document.getElementById('nav-tax').click(); return false;">Tax Payment Processing Portal
+                (Temporary Outage)</a></li>
+            <li><a href="#" onclick="document.getElementById('nav-services').click(); return false;">Citizen ID Renewal Submission
+                (Appointments currently full)</a></li>
             <li><a href="#"
-                onclick="showPopup('GOVNET FAQ', 'The FAQ section is currently unavailable while it is being reviewed for accuracy by the Ministry of Accurate Information (est. 1997, operationally active: never).', 'Fine'); return false;">Frequently
+                onclick="showPopup('GOVNET FAQ', 'The Frequently Asked Questions portal is currently offline for scheduled bureaucratic review. Please check back next fiscal quarter.', 'Close'); return false;">Frequently
                 Asked Questions</a></li>
           </ul>
         </div>
@@ -222,16 +216,15 @@
       <!-- Form header -->
       <div id="s2-form-title">FORM 27-B/6: CITIZEN BENEFIT APPLICATION</div>
       <div id="s2-form-subtitle">
-        Please complete all fields accurately. Incomplete or inaccurate forms will be shredded, then re-filed, then
-        shredded again.<br>
-        <span id="s2-vanish-text">Do not leave required fields blank. The system notices. The system remembers.</span>
+        Issued under the Administrative Services Compliance Act (2001), Section 14-B. Please ensure all mandatory fields are completed accurately to avoid processing delays.<br>
+        <span id="s2-vanish-text">Submit to Processing Office 3 (currently accepting submissions).</span>
       </div>
 
       <!-- Status bar -->
       <div id="s2-status-bar">
-        <span>Document Rev: 0.9.4</span>
-        <span id="s2-doc-status">Status: UNSTABLE</span>
-        <span>Dept: Existential Maintenance</span>
+        <span>Document Rev: 14.2.1</span>
+        <span id="s2-doc-status">Processing Node: [OFFLINE-3]</span>
+        <span>Dept: Administrative Disbursement</span>
         <span id="s2-clock">Current Portal Time: loading...</span>
       </div>
 
@@ -244,60 +237,59 @@
       <form id="s2-benefit-form" onsubmit="return false;" novalidate>
 
         <div class="s2-field-group">
-          <label for="s2-name">Full Legal Name (as registered in Citizen Archive)</label>
-          <input type="text" id="s2-name" name="full_name" placeholder="ENTER FULL NAME — Example: CITIZEN_NAME_HERE"
+          <label for="s2-name">Full Legal Name (as recorded in the National Citizen Registry, Form 11-A)</label>
+          <input type="text" id="s2-name" name="full_name" placeholder="Enter Full Name (e.g. John/Jane Doe)"
             autocomplete="off">
         </div>
 
         <div class="s2-field-group">
-          <label for="s2-citizen-id">Citizen Identification Number</label>
+          <label for="s2-citizen-id">Citizen Identification Number (CIN) - Refer to your CIN card or Form 4-G</label>
           <input type="text" id="s2-citizen-id" name="citizen_id" placeholder="Format: XX-BACK-XX" autocomplete="off">
         </div>
 
         <div class="s2-field-group">
           <label for="s2-purpose">Purpose of Visit</label>
           <select id="s2-purpose" name="purpose">
-            <option value="">— Select One —</option>
-            <option value="complaining">Complaining</option>
-            <option value="more_complaining">More Complaining</option>
-            <option value="existential">Existential Dread</option>
-            <option value="dunno">I Don't Know Anymore</option>
-            <option value="other">Other (Form 28-C Required)</option>
+            <option value="">— Select Purpose of Visit —</option>
+            <option value="enquiry">General Enquiry</option>
+            <option value="assessment">Benefit Assessment Request</option>
+            <option value="verification">Document Verification</option>
+            <option value="appeals">Appeals and Reviews</option>
+            <option value="correction">Administrative Correction</option>
+            <option value="status_clarification">Status Clarification (see attached notice)</option>
+            <option value="other">Other — specify on Form 28-C</option>
           </select>
         </div>
 
         <div class="s2-field-group">
-          <label for="s2-benefit-type">Benefit Type Requested</label>
+          <label for="s2-benefit-type">Benefit Category Requested</label>
           <select id="s2-benefit-type" name="benefit">
-            <option value="">— Select Benefit (Subject to Availability) —</option>
-            <option>Standard Existence Allowance</option>
-            <option>Emergency Reality Subsidy</option>
-            <option>Dimensional Displacement Compensation</option>
-            <option>Form 22-A Completion Award (Unavailable)</option>
+            <option value="">— Select Benefit Category —</option>
+            <option value="housing">Housing Assistance (Category B)</option>
+            <option value="employment">Employment Support Allowance</option>
+            <option value="disability">Disability and Accessibility Aid</option>
+            <option value="emergency">Emergency Financial Relief</option>
+            <option value="reintegration">Citizen Re-integration Support</option>
+            <option value="other">Other (processing time: indefinite)</option>
           </select>
         </div>
 
         <div id="s2-checkbox-group">
           <input type="checkbox" id="s2-exist-confirm" name="confirm_exist">
           <label for="s2-exist-confirm">
-            I confirm that I exist in this reality, that my data is accurate to the best of my knowledge, and that I
-            accept any consequences of this form including but not limited to temporal displacement, administrative
-            archiving, or loss of physical form.
+            I confirm that the information provided is accurate to the best of my knowledge. I consent to the storage and processing of my personal data in accordance with the Data Management and Citizen Records Act (1997), as amended in 2003. I acknowledge that submission of this form constitutes acceptance of all applicable processing terms, timelines, and outcomes as determined by the Administrative Services Division.
           </label>
         </div>
 
-        <!-- Submit button — drifts away -->
-        <button type="button" id="s2-submit-btn">SUBMIT FORM 27-B/6</button>
+        <!-- Submit button -->
+        <button type="button" id="s2-submit-btn">SUBMIT AND CONFIRM</button>
 
       </form>
     </div>
 
     <!-- Footer -->
     <footer id="s2-footer">
-      <p id="s2-footer-legal">© 1997–2024 GOVNET Administrative Services. Form 27-B/6 Rev 0.9.4 (Unstable). By clicking
-        SUBMIT you agree that GOVNET accepts no liability for outcomes including but not limited to: loss of identity,
-        incorrect dimensions, archived memory, or encounters with entities in restricted administrative zones. All
-        fields are mandatory. No fields are sufficient.</p>
+      <p id="s2-footer-legal">© 1997–2004 GOVNET Administrative Services. Form 27-B/6 (Rev 14.2.1). Submission of this form is subject to review under the Digital Connectivity and Information Act. GOVNET accepts no liability for processing delays, mismanaged documentation, or data synchronization errors occurring across internal domains. All fields are mandatory.</p>
     </footer>
   </section>
 
@@ -678,7 +670,7 @@
   <script src="js/stage1.js"></script>
   <script src="js/stage2.js"></script>
   <script src="js/stage3.js"></script>
-  <script src="js/terminal.js"></script>
+  <script src="js/stage4.js"></script>
   <script src="js/stage5.js"></script>
   <script src="js/stage6.js"></script>
   <script src="js/stage7.js"></script>

@@ -1,5 +1,5 @@
 /* ================================
-   TERMINAL.JS — Stage 4 CRT Terminal
+   STAGE4.JS — Stage 4 CRT Terminal
    Boot sequence, password logic
    ================================ */
 

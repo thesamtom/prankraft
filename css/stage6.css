@@ -71,7 +71,7 @@
   width: 100%;
   text-align: center;
   padding: 40px 20px;
-  animation: creditsScroll 110s linear forwards;
+  animation: creditsScroll 220s linear forwards;
 }
 
 @keyframes creditsScroll {

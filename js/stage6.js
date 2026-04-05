@@ -14,8 +14,8 @@ let noiseInterval = null;
 
 /* ---- Stage 6 Pause / Resume ---- */
 let s6PauseTime       = null;  // Date.now() when paused
-let s6ElapsedBeforePause = 0;  // ms into the 100s transition timer
-let s6TransitionTotal = 100000; // mirrors the setTimeout value
+let s6ElapsedBeforePause = 0;  // ms into the 180s transition timer
+let s6TransitionTotal = 180000; // mirrors the setTimeout value
 
 window.pauseStage6 = function () {
   // 1. Freeze the CSS credits scroll
@@ -233,8 +233,8 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
     s6ElapsedBeforePause = 0;
     s6PauseTime          = null;
 
-    // The "instant glitch" triggers at the 100s mark,
-    // aligned with the branding block during the slower 110s scroll.
+    // The "instant glitch" triggers at the 180s mark,
+    // aligned with the whisper block during the slower 220s scroll.
     s6TransitionTimeout = setTimeout(() => {
       triggerStage7Glitch();
     }, s6TransitionTotal);

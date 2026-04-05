@@ -74,66 +74,18 @@ function isFormIncomplete() {
   return false;
 }
 
-// ---- Submit button dodges cursor when form is incomplete ----
+// ---- Submit button static but gray if incomplete ----
 function initDriftButton() {
   const btn = document.getElementById('s2-submit-btn');
   const formWrap = document.getElementById('s2-form-wrap');
   if (!btn || !formWrap) return;
 
-  const DODGE_RADIUS = 120;  // how close cursor can get before dodge triggers
-  let isDodging = false;
-  let dodgeCount = 0;
+  // Add incomplete class initially if form is incomplete
+  if (isFormIncomplete()) {
+    btn.classList.add('incomplete-btn');
+  }
 
-  // Track mouse and dodge when cursor gets near the button
-  formWrap.addEventListener('mousemove', (e) => {
-    // Don't dodge if form is complete or after 3rd submit attempt
-    if (!isFormIncomplete() || submitAttempts >= 2) {
-      btn.style.transform = '';
-      btn.style.position = 'relative';
-      btn.style.left = '';
-      btn.style.top = '';
-      btn.classList.remove('dodging');
-      return;
-    }
-
-    const rect = btn.getBoundingClientRect();
-    const btnCenterX = rect.left + rect.width / 2;
-    const btnCenterY = rect.top + rect.height / 2;
-
-    const dx = e.clientX - btnCenterX;
-    const dy = e.clientY - btnCenterY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance < DODGE_RADIUS) {
-      isDodging = true;
-      dodgeCount++;
-      btn.classList.add('dodging');
-
-      // Calculate dodge direction (away from cursor)
-      const angle = Math.atan2(dy, dx);
-      // Dodge distance increases with each attempt (more frantic)
-      const dodgeDist = 80 + Math.min(dodgeCount * 15, 200);
-
-      // Calculate new position (opposite direction from cursor)
-      let moveX = -Math.cos(angle) * dodgeDist + (Math.random() - 0.5) * 60;
-      let moveY = -Math.sin(angle) * dodgeDist + (Math.random() - 0.5) * 40;
-
-      // Keep button within the form wrap bounds
-      const wrapRect = formWrap.getBoundingClientRect();
-      const futureX = rect.left + moveX;
-      const futureY = rect.top + moveY;
-
-      // Bounce off edges
-      if (futureX < wrapRect.left + 10) moveX = Math.abs(moveX);
-      if (futureX + rect.width > wrapRect.right - 10) moveX = -Math.abs(moveX);
-      if (futureY < wrapRect.top + 10) moveY = Math.abs(moveY);
-      if (futureY + rect.height > wrapRect.bottom - 10) moveY = -Math.abs(moveY);
-
-      btn.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    }
-  });
-
-  // Reset button text when form becomes complete
+  // Check form state on every change
   const formFields = ['s2-name', 's2-purpose', 's2-benefit-type'];
   formFields.forEach(id => {
     const el = document.getElementById(id);
@@ -146,11 +98,10 @@ function initDriftButton() {
   if (checkbox) checkbox.addEventListener('change', checkFormAndResetBtn);
 
   function checkFormAndResetBtn() {
-    if (!isFormIncomplete()) {
-      btn.style.transform = '';
-      btn.classList.remove('dodging');
-      btn.textContent = 'SUBMIT FORM 27-B/6';
-      dodgeCount = 0;
+    if (!isFormIncomplete() || submitAttempts >= 2) {
+      btn.classList.remove('incomplete-btn');
+    } else {
+      btn.classList.add('incomplete-btn');
     }
   }
 }
@@ -186,6 +137,7 @@ function initSubmitBtn() {
       // Shake name field for effect
       shakeField('s2-name');
       shakeField('s2-citizen-id');
+      btn.textContent = 'TRY CLICKING AGAIN';
 
     } else if (submitAttempts === 2) {
       // Clock glitch before popup
@@ -198,6 +150,7 @@ function initSubmitBtn() {
         '<em>(This office is perpetually closed. Please try again later.)</em>',
         'It is Monday'
       );
+      btn.textContent = 'TRY TRY AGAIN';
 
     } else if (submitAttempts >= 3) {
       // Trigger the CLUE 2 moment + transition to Stage 3

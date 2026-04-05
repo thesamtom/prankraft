@@ -494,13 +494,13 @@ function setupFullscreenListeners() {
 
 // =============================
 // Stage 4 — Enhanced wrong password effects
-// Exported so terminal.js can call them
+// Exported so stage4.js can call them
 // =============================
 
 let s4WrongAttempts = 0;
 
 /**
- * Called by terminal.js on each wrong password attempt.
+ * Called by stage4.js on each wrong password attempt.
  * Returns a lockout duration in ms (0 = no lockout).
  */
 function onWrongPassword() {
