@@ -83,6 +83,7 @@
 .s6-block {
   margin-bottom: 3em;
   line-height: 2;
+  text-align: center;
 }
 
 .s6-ascii-block {
@@ -91,6 +92,7 @@
   white-space: pre;
   color: #00ff41;
   text-shadow: 0 0 8px #00ff41, 0 0 20px rgba(0,255,65,0.3);
+  text-align: center;
 }
 
 .s6-heading {
@@ -122,23 +124,7 @@
   margin: 2em 0;
 }
 
-.s6-levels {
-  font-size: clamp(12px, 1.8vw, 15px);
-  color: #00cc33;
-  text-align: left;
-  display: inline-block;
-  line-height: 2.4;
-}
 
-.s6-levels .level-label {
-  color: #00ff41;
-  text-shadow: 0 0 6px rgba(0,255,65,0.5);
-}
-
-.s6-levels .level-note {
-  color: #009922;
-  font-size: 0.85em;
-}
 
 .s6-emphasis {
   font-size: clamp(15px, 2.2vw, 18px);

@@ -16,7 +16,7 @@ let s6VolumeTimeout = null;
 /* ---- Stage 6 Pause / Resume ---- */
 let s6PauseTime       = null;  // Date.now() when paused
 let s6ElapsedBeforePause = 0;  // ms into the 180s transition timer
-let s6TransitionTotal = 180000; // mirrors the setTimeout value
+let s6TransitionTotal = 195000; // mirrors the setTimeout value
 
 window.pauseStage6 = function () {
   // 1. Freeze the CSS credits scroll
@@ -49,8 +49,8 @@ window.resumeStage6 = function () {
 
   // 2. Restart timers
   const remainingTransition = s6TransitionTotal - s6ElapsedBeforePause;
-  // Volume ramp starts at 145s (35s before 180s glitch)
-  const volRampStart = 145000;
+  // Volume ramp starts at 160s (35s before 195s glitch)
+  const volRampStart = 160000;
   const remainingVolume = volRampStart - s6ElapsedBeforePause;
 
   window._s6EntryTime = Date.now();
@@ -284,16 +284,16 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
     s6ElapsedBeforePause = 0;
     s6PauseTime          = null;
 
-    // The "instant glitch" triggers at the 180s mark,
+    // The "instant glitch" triggers at the 195s mark,
     // aligned with the whisper block during the slower 220s scroll.
     s6TransitionTimeout = setTimeout(() => {
       triggerStage7Glitch();
     }, s6TransitionTotal);
 
-    // Volume ramp starts at 145s (35s before 180s glitch)
+    // Volume ramp starts at 160s (35s before 195s glitch)
     s6VolumeTimeout = setTimeout(() => {
       startExponentialVolumeRamp();
-    }, 145000);
+    }, 160000);
   } else {
     // Cleanup Stage 6
     if (s6TransitionTimeout) {
