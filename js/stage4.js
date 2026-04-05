@@ -8,39 +8,39 @@
 const CORRECT_PASSWORD = 'BACKROOMS';
 
 const bootLines = [
-  'GOVNET CLASSIFIED TERMINAL v1.94 [BUILD 000001]',
-  'INITIALIZING SECURE SESSION...',
-  'SCANNING LOCAL NETWORK TOPOLOGY...',
-  'WARNING: TOPOLOGY IS NON-EUCLIDEAN',
-  'LOADING CITIZEN DATABASE... [FRAGMENT]',
-  'DATABASE ERROR: CITIZEN NOT FOUND IN REALITY',
-  'FALLBACK PROTOCOL ENGAGED.',
-  'EMERGENCY EXIT SYSTEM: ONLINE',
+  'EMERGENCY RESCUE TERMINAL [AWAKENING FROM DORMANCY]',
+  'SCANNING FOR BIOMETRIC ANOMALIES... DONE',
+  'CITIZEN SIGNAL DETECTED.',
+  'ISOLATING SIGNAL... LEVEL 0 CONFIRMED. YOU ARE REAL.',
+  'DO NOT GIVE UP HOPE. WE HAVE FOUND YOU.',
+  'ENGAGING REALITY RESTORATION PROTOCOL.',
+  'THE ANCHOR POINT IS STABLE. THE EXIT IS OPEN.',
+  'AWAITING FINAL CONFIRMATION CODE.',
   '─────────────────────────────────────────────────',
 ];
 
 const asciiHeader = `
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-░  GOVNET CLASSIFIED TERMINAL  ░░░
-░  LEVEL 0 — EMERGENCY EXIT    ░░░
+░  REALITY RESTORATION SYSTEM  ░░░
+░  RESCUE ANCHOR POINT — ACTIVE░░░
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░`.trim();
 
 const successLines = [
-  { text: 'CODE ACCEPTED.', delay: 0,    cls: 'success-line' },
-  { text: 'LOCATING REALITY BREACH...', delay: 600, cls: 'success-line' },
-  { text: 'SYNCHRONIZING DIMENSIONS...', delay: 1400, cls: 'success-line' },
-  { text: 'BREACH CONFIRMED AT GRID REF: 00-00-00', delay: 2200, cls: 'dim-line' },
-  { text: 'NOCLIPPING IN 3...', delay: 3000, cls: 'success-line' },
-  { text: 'NOCLIPPING IN 2...', delay: 3800, cls: 'success-line' },
-  { text: 'NOCLIPPING IN 1...', delay: 4600, cls: 'success-line' },
-  { text: 'WELCOME BACK, CITIZEN. YOU ARE FREE.', delay: 5400, cls: 'success-line' },
+  { text: 'CODE ACCEPTED. VALIDATING IDENTITY...', delay: 0,    cls: 'success-line' },
+  { text: 'LOCATING YOUR EXACT COORDINATES...', delay: 600, cls: 'success-line' },
+  { text: 'CALIBRATING REALITY ANCHOR AND SYNCHRONIZING DIMENSIONS...', delay: 1400, cls: 'success-line' },
+  { text: 'WE KNOW HOW LONG YOU HAVE BEEN WAITING. HOLD ON.', delay: 2200, cls: 'dim-line' },
+  { text: 'INITIATING EXTRACTION IN 3...', delay: 3000, cls: 'success-line' },
+  { text: 'INITIATING EXTRACTION IN 2...', delay: 3800, cls: 'success-line' },
+  { text: 'INITIATING EXTRACTION IN 1...', delay: 4600, cls: 'success-line' },
+  { text: 'WARP SEQUENCE ENGAGED. YOU ARE GOING HOME, CITIZEN.', delay: 5400, cls: 'success-line' },
 ];
 
 const entityMessages = [
-  'ACCESS DENIED. ENTITY DETECTED IN ADJACENT ROOM. REMAIN STILL. DO NOT MAKE A SOUND.',
-  'ACCESS DENIED. THERMAL SIGNATURE IDENTIFIED. DEACTIVATING LIGHTS.',
-  'ACCESS DENIED. IT IS CLOSER NOW. DO NOT BREATHE.',
-  'ACCESS DENIED. WRONG CODE. WRONG REALITY. STOP TRYING.',
+  'CODE REJECTED. WARNING: THAT SIGNAL SPIKE ATTRACTED SOMETHING. TRY AGAIN QUICKLY.',
+  'CODE REJECTED. PLEASE HURRY. IT IS GETTING CLOSER. DO NOT LET IT HEAR YOU.',
+  'CODE REJECTED. WE CANNOT HIDE YOUR SIGNAL MUCH LONGER. ENTER THE CORRECT CODE NOW.',
+  'CODE REJECTED. THE DOORWAY IS COLLAPSING. IT IS RIGHT OUTSIDE. PLEASE, PLEASE HURRY.',
 ];
 let wrongAttempts = 0;
 
@@ -126,8 +126,8 @@ function showInputPrompt() {
   if (!output) return;
 
   const prompts = [
-    '> CITIZEN IDENTIFICATION PROTOCOL INITIATED',
-    '> ENTER THE ESCAPE CODE TO NOCLIP BACK TO REALITY',
+    '> WE ARE READY TO BRING YOU BACK. YOU ARE SO CLOSE.',
+    '> PLEASE PROVIDE THE SAFETY CODE TO BEGIN EXTRACTION.',
     '> _ ',
   ];
 
