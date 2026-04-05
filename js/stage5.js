@@ -633,7 +633,7 @@ function drawMaze() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('EXIT', x + CS / 2, y + CS * 0.38);
-        ctx.fillText('→', x + CS / 2, y + CS * 0.68);
+        ctx.fillText('->', x + CS / 2, y + CS * 0.68);
 
       } else {
         // PATH
@@ -987,29 +987,29 @@ const RULES_LINES = [
   '',
   'SURVIVAL BRIEFING:',
   '',
-  '  ▸ Each level has one exit door.',
+  '  > Each level has one exit door.',
   '    Find it. Pass through it.',
   '',
-  '  ▸ Each level you survive,',
+  '  > Each level you survive,',
   '    the maze grows.',
   '    More entities appear.',
   '    They move faster.',
   '    You move slower.',
   '',
-  '  ▸ If an entity reaches you —',
+  '  > If an entity reaches you —',
   '    your session ends.',
   '    The credits roll.',
   '    You were never getting out.',
   '',
-  '  ▸ There is no winning.',
+  '  > There is no winning.',
   '    There is only how long',
   '    you lasted.',
   '',
   'CONTROLS:',
   '',
-  '  ▸ WASD or ARROW KEYS to move',
-  '  ▸ Find the glowing EXIT door',
-  '  ▸ Do not let them touch you',
+  '  > WASD or ARROW KEYS to move',
+  '  > Find the glowing EXIT door',
+  '  > Do not let them touch you',
   '',
   'The hum of the fluorescent lights',
   'will accompany you.',

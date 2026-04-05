@@ -99,7 +99,7 @@ function requestFullscreen() {
           TRAP.fullscreenDenied = true;
           if (fullscreenWarning) {
             fullscreenWarning.textContent =
-              '⚠ MANDATORY IMMERSION MODE: GOVNET HAS RESTRICTED LOCAL EXIT COMMANDS.';
+              '[!] MANDATORY IMMERSION MODE: GOVNET HAS RESTRICTED LOCAL EXIT COMMANDS.';
             fullscreenWarning.classList.add('show');
             setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);
           }
@@ -479,7 +479,7 @@ function setupFullscreenListeners() {
         // Stage 1/2 — just a warning banner
         if (fullscreenWarning) {
           fullscreenWarning.textContent =
-            '⚠ GOVNET IMMERSION MODE DISENGAGED — ' +
+            '[!] GOVNET IMMERSION MODE DISENGAGED — ' +
             'CITIZEN SAFETY IS REDUCED OUTSIDE FULLSCREEN MODE.';
           fullscreenWarning.classList.add('show');
           setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);

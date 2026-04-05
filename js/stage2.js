@@ -129,7 +129,7 @@ function initSubmitBtn() {
     if (submitAttempts === 1) {
       showPopup(
         'GOVNET System Error',
-        '⚠️ <strong>ERROR 33-B:</strong> System requires this form to be submitted in triplicate.<br><br>' +
+        '[WARN] <strong>ERROR 33-B:</strong> System requires this form to be submitted in triplicate.<br><br>' +
         'Please print, sign, stamp, scan, re-enter, and submit all three copies simultaneously.<br><br>' +
         'Triplicate submission window closes in: <strong>Error computing time.</strong>',
         'Understood'
@@ -144,7 +144,7 @@ function initSubmitBtn() {
       glitchClock();
       showPopup(
         'GOVNET — Office Hours Notice',
-        '🕓 <strong>ERROR:</strong> Our offices closed at 4:00PM.<br><br>' +
+        '[TIME:] <strong>ERROR:</strong> Our offices closed at 4:00PM.<br><br>' +
         'Current time: <strong>Monday, 4:00PM</strong><br>' +
         'We will reopen: <strong>Monday, 9:00AM</strong><br><br>' +
         '<em>(This office is perpetually closed. Please try again later.)</em>',

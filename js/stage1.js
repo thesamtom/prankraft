@@ -176,7 +176,7 @@ function initNavLinks() {
     }
   });
 
-  // Apply for Benefits → go to Stage 2
+  // Apply for Benefits -> go to Stage 2
   const applyBtn = document.getElementById('nav-apply');
   if (applyBtn) {
     applyBtn.addEventListener('click', (e) => {
