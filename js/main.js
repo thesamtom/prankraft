@@ -13,6 +13,7 @@ window.GOVNET = {
   startTime: null,
   endTime: null,
   audioUnlocked: false,
+  paused: false,
 };
 
 // ---- Stage Sections ----
@@ -37,6 +38,10 @@ function goToStage(num, delay = 0) {
     Object.values(stages).forEach(s => {
       if (s) s.classList.remove('active');
     });
+
+    // Clear pause state if resuming or transitioning during a pause
+    window.GOVNET.paused = false;
+
     // Show target
     if (stages[num]) {
       stages[num].classList.add('active');
@@ -103,6 +108,29 @@ document.addEventListener('click', () => {
   }
 }, { once: true, capture: true });
 
+// ---- Pause / Resume system ----
+function pauseCurrentStage() {
+  if (window.GOVNET.paused) return; // guard against double-pause
+  window.GOVNET.paused = true;
+
+  const stage = window.GOVNET.currentStage;
+  if (stage === 3) { window.pauseStage3 && window.pauseStage3(); }
+  if (stage === 4) { window.pauseStage4 && window.pauseStage4(); }
+  if (stage === 5) { window.pauseStage5 && window.pauseStage5(); }
+  if (stage === 6) { window.pauseStage6 && window.pauseStage6(); }
+}
+
+function resumeCurrentStage() {
+  if (!window.GOVNET.paused) return; // guard against spurious resumes
+  window.GOVNET.paused = false;
+
+  const stage = window.GOVNET.currentStage;
+  if (stage === 3) { window.resumeStage3 && window.resumeStage3(); }
+  if (stage === 4) { window.resumeStage4 && window.resumeStage4(); }
+  if (stage === 5) { window.resumeStage5 && window.resumeStage5(); }
+  if (stage === 6) { window.resumeStage6 && window.resumeStage6(); }
+}
+
 // ---- Init ----
 document.addEventListener('DOMContentLoaded', () => {
   // Record start time
@@ -112,8 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
   goToStage(1);
 
   // Expose goToStage globally for use in other modules
-  window.goToStage   = goToStage;
-  window.showPopup   = showPopup;
-  window.flashBlack  = flashBlack;
-  window.flashRed    = flashRed;
+  window.goToStage            = goToStage;
+  window.showPopup            = showPopup;
+  window.flashBlack           = flashBlack;
+  window.flashRed             = flashRed;
+  window.pauseCurrentStage    = pauseCurrentStage;
+  window.resumeCurrentStage   = resumeCurrentStage;
 });

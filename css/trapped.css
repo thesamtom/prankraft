@@ -7,7 +7,7 @@
 #trap-overlay {
   position: fixed;
   inset: 0;
-  z-index: 5000;
+  z-index: 2147483647; /* Absolute maximum possible Z-index */
   display: none;
   flex-direction: column;
   align-items: center;

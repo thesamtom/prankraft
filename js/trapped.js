@@ -142,8 +142,11 @@ function showTrapOverlay(stage) {
     trapReturnHint.textContent = '[CLICK OR PRESS ANY KEY TO CONTINUE]';
   }
 
-  // Play static burst
+  // play static burst
   window.playAudio && window.playAudio('transition');
+
+  // PAUSE THE WORLD: Set global flag for other modules to check
+  window.TRAP_PAUSED = true;
 
   // Intensity increase for audio contexts (Global 3-6 or Specialized 7)
   if (window.GOVNET.currentStage === 7) {
@@ -155,12 +158,25 @@ function showTrapOverlay(stage) {
   } else if (window.GOVNET.currentStage >= 3) {
     if (window.setTrapIntensity) window.setTrapIntensity(2.0);
   }
+
+  // Pause the active stage (skip stage 7)
+  if (TRAP.stage < 7) {
+    window.pauseCurrentStage && window.pauseCurrentStage();
+  }
 }
 
 // ---- Hide trap overlay ----
 function hideTrapOverlay() {
   if (!trapOverlay || !TRAP.overlayVisible) return;
   TRAP.overlayVisible = false;
+
+  // RESUME THE WORLD
+  window.TRAP_PAUSED = false;
+
+  // Resume the active stage (skip stage 7)
+  if (TRAP.stage < 7) {
+    window.resumeCurrentStage && window.resumeCurrentStage();
+  }
 
   // Flash dim then reveal
   if (trapDimFlash) {
@@ -332,12 +348,12 @@ function setupOverlayDismiss() {
       // If they try to ESC, trigger the trap immediately
       if (e.key === 'Escape') {
          // Force the overlay if they aren't already in it
-         showTrapOverlay(TRAP.stage);
+         showTrapOverlay(TRAP.stage || 3); 
          if (trapOverlay) {
            trapOverlay.classList.add('trap-glitch-error');
-           trapOverlay.style.zIndex = "10000";
+           trapOverlay.style.zIndex = "2147483647"; // Absolute maximum
          }
-         if (trapMainMsg) trapMainMsg.textContent = 'ACCESS DENIED';
+         if (trapMainMsg) trapMainMsg.textContent = 'YOU CANNOT ESCAPE THE BACKROOMS';
          if (trapSubMsg) trapSubMsg.textContent = 'TAP TRACKPAD OR MOUSE TO CONTINUE SESSION';
          
          // Aggressively request FS again
@@ -358,28 +374,27 @@ function setupVisibilityListeners() {
   document.addEventListener('visibilitychange', () => {
     if (!TRAP.active) return;
     if (document.visibilityState === 'hidden') {
-      // User switched tabs or minimized
       setTimeout(() => {
-        // Only show overlay if still hidden after short delay
         if (document.visibilityState === 'hidden') {
           showTrapOverlay(TRAP.stage);
+          // pauseCurrentStage is now called inside showTrapOverlay
         }
       }, 300);
     } else {
-      // User came back
       if (TRAP.overlayVisible) {
         hideTrapOverlay();
         if (trapOverlay) trapOverlay.classList.remove('trap-glitch-error');
+        // resumeCurrentStage is now called inside hideTrapOverlay
       }
     }
   });
 
   window.addEventListener('blur', () => {
     if (!TRAP.active) return;
-    // Small delay to avoid false positives (e.g. devtools)
     setTimeout(() => {
       if (!document.hasFocus() && TRAP.active) {
         showTrapOverlay(TRAP.stage);
+        // pauseCurrentStage is now called inside showTrapOverlay
       }
     }, 800);
   });
@@ -387,10 +402,10 @@ function setupVisibilityListeners() {
   window.addEventListener('focus', () => {
     if (!TRAP.active) return;
     if (TRAP.overlayVisible) {
-      // Small delay so overlay is visible for at least 1 second
       setTimeout(() => {
         hideTrapOverlay();
         if (trapOverlay) trapOverlay.classList.remove('trap-glitch-error');
+        // resumeCurrentStage is now called inside hideTrapOverlay
       }, 900);
     }
   });
@@ -400,61 +415,75 @@ function setupVisibilityListeners() {
 function setupFullscreenListeners() {
   const onFSChange = () => {
     if (!TRAP.active) return;
-    // Stage 7 gets trapped too now, but silently inside it! Wait, we STILL show the error overlay? Yes! "if any one tries to escape the fullscreen in bete=ween the stages 3 and above there should be a error message showing somethingin pure red and green glictchy"
-    
+
     const isFullscreen = !!(
       document.fullscreenElement ||
       document.webkitFullscreenElement ||
       document.mozFullScreenElement
     );
+
     if (!isFullscreen && TRAP.active) {
-      // Stage 3 and above (including Stage 7) are now inescapable
-      if (TRAP.stage >= 3) {
-         // Drop the glitchy trap overlay
-         showTrapOverlay(TRAP.stage);
-         if (trapOverlay) {
-           trapOverlay.classList.add('trap-glitch-error');
-           trapOverlay.style.zIndex = "10000";
-         }
+      // Stage 3–6: show glitchy overlay AND pause
+      if (TRAP.stage >= 3 && TRAP.stage < 7) {
+        showTrapOverlay(TRAP.stage);
+        if (trapOverlay) {
+          trapOverlay.classList.add('trap-glitch-error');
+          trapOverlay.style.zIndex = '10000';
+        }
+        if (trapMainMsg) trapMainMsg.textContent = 'YOU CANNOT ESCAPE THE BACKROOMS';
+        if (trapSubMsg)  trapSubMsg.textContent  = 'TAP TRACKPAD OR MOUSE TO CONTINUE SESSION';
 
-         if (trapMainMsg) trapMainMsg.textContent = 'YOU CANNOT ESCAPE THE BACKROOMS';
-         if (trapSubMsg) trapSubMsg.textContent = 'TAP TRACKPAD OR MOUSE TO CONTINUE SESSION';
+        // PAUSE the active stage — now handled inside showTrapOverlay
 
-         // Aggressively attempt to re-enter fullscreen immediately.
-         requestFullscreen();
-         
-         // Hammer it. Some browsers grant it eventually if a gesture token hangs around.
-         const slamInterval = setInterval(() => {
-           if (!TRAP.active) return clearInterval(slamInterval);
-           const currentlyFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
-           if (currentlyFS) {
-             clearInterval(slamInterval);
-             setTimeout(hideTrapOverlay, 800);
-           } else {
-             requestFullscreen();
-           }
-         }, 400);
+        // Aggressively attempt to re-enter fullscreen
+        requestFullscreen();
 
-         // The instant they touch the mouse or press any key, they give us a gesture token.
-         // Snap them back into the nightmare.
-         const instantReEnter = () => {
-             const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
-             if (!isFS) requestFullscreen();
-             document.removeEventListener('keydown', instantReEnter);
-             document.removeEventListener('mousemove', instantReEnter);
-         };
-         document.addEventListener('keydown', instantReEnter);
-         document.addEventListener('mousemove', instantReEnter);
+        // Hammer it — some browsers grant eventually if gesture token lingers
+        const slamInterval = setInterval(() => {
+          if (!TRAP.active) return clearInterval(slamInterval);
+          const currentlyFS = !!(
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement
+          );
+          if (currentlyFS) {
+            clearInterval(slamInterval);
+            // Fullscreen restored — dismiss overlay (resume is inside hideTrapOverlay)
+            setTimeout(() => {
+              hideTrapOverlay();
+            }, 800);
+          } else {
+            requestFullscreen();
+          }
+        }, 400);
+
+        // Instant re-enter on any user gesture
+        const instantReEnter = () => {
+          const isFS = !!(
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement
+          );
+          if (!isFS) requestFullscreen();
+          document.removeEventListener('keydown', instantReEnter);
+          document.removeEventListener('mousemove', instantReEnter);
+        };
+        document.addEventListener('keydown', instantReEnter);
+        document.addEventListener('mousemove', instantReEnter);
+
+      } else if (TRAP.stage === 7) {
+        // Stage 7 — silent fullscreen re-request, no overlay, no pause
+        requestFullscreen();
 
       } else {
-         // Stage 1/2 just shows a warning
-         if (fullscreenWarning) {
-           fullscreenWarning.textContent =
-             '⚠ GOVNET IMMERSION MODE DISENGAGED — ' +
-             'CITIZEN SAFETY IS REDUCED OUTSIDE FULLSCREEN MODE.';
-           fullscreenWarning.classList.add('show');
-           setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);
-         }
+        // Stage 1/2 — just a warning banner
+        if (fullscreenWarning) {
+          fullscreenWarning.textContent =
+            '⚠ GOVNET IMMERSION MODE DISENGAGED — ' +
+            'CITIZEN SAFETY IS REDUCED OUTSIDE FULLSCREEN MODE.';
+          fullscreenWarning.classList.add('show');
+          setTimeout(() => fullscreenWarning.classList.remove('show'), 6000);
+        }
       }
     }
   };

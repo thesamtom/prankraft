@@ -44,32 +44,80 @@ const entityMessages = [
 ];
 let wrongAttempts = 0;
 
-// ---- Boot sequence ----
+/* ---- Stage 4 Pause / Resume state ---- */
+let s4PauseTimeout  = null;   // current pending setTimeout ID
+let s4BootLineIndex = 0;      // next boot line to show
+let s4IsPaused      = false;
+let s4BootActive    = false;  // true while boot sequence is running
+let s4BootContainer = null;   // cached DOM ref
+
+window.pauseStage4 = function () {
+  s4IsPaused = true;
+  if (s4PauseTimeout !== null) {
+    clearTimeout(s4PauseTimeout);
+    s4PauseTimeout = null;
+  }
+};
+
+window.resumeStage4 = function () {
+  if (!s4IsPaused) return;
+  s4IsPaused = false;
+  if (s4BootActive) {
+    showNextBootLine();
+  }
+};
+
+// ---- Boot sequence (sequential / pausable) ----
+function showNextBootLine() {
+  if (s4IsPaused) return;
+  if (window.GOVNET.currentStage !== 4) return;
+
+  if (s4BootLineIndex >= bootLines.length) {
+    // Boot complete — show input prompt after a short delay
+    s4PauseTimeout = setTimeout(() => {
+      s4PauseTimeout = null;
+      if (!s4IsPaused && window.GOVNET.currentStage === 4) {
+        s4BootActive = false;
+        showInputPrompt();
+      }
+    }, 300);
+    return;
+  }
+
+  const line = bootLines[s4BootLineIndex];
+  const span = document.createElement('span');
+  span.className = 's4-boot-line';
+  span.textContent = line;
+  if (s4BootContainer) s4BootContainer.appendChild(span);
+
+  // Tiny delay then reveal, then chain to next
+  s4PauseTimeout = setTimeout(() => {
+    s4PauseTimeout = null;
+    if (s4IsPaused) return;
+    span.classList.add('show');
+    window.playAudio && window.playAudio('type');
+    s4BootLineIndex++;
+
+    // 280ms gap between lines (matching original timing)
+    s4PauseTimeout = setTimeout(() => {
+      s4PauseTimeout = null;
+      showNextBootLine();
+    }, 280);
+  }, 50);
+}
+
 function showBootSequence() {
-  const container = document.getElementById('s4-boot-lines');
-  if (!container) return;
+  s4BootContainer = document.getElementById('s4-boot-lines');
+  if (!s4BootContainer) return;
 
   // ASCII header
   const header = document.getElementById('s4-ascii-header');
   if (header) header.textContent = asciiHeader;
 
-  bootLines.forEach((line, i) => {
-    const span = document.createElement('span');
-    span.className = 's4-boot-line';
-    span.textContent = line;
-    container.appendChild(span);
-
-    setTimeout(() => {
-      span.classList.add('show');
-      window.playAudio && window.playAudio('type');
-    }, i * 280 + 300);
-  });
-
-  // After boot, show input
-  const totalDelay = bootLines.length * 280 + 600;
-  setTimeout(() => {
-    showInputPrompt();
-  }, totalDelay);
+  s4BootLineIndex = 0;
+  s4IsPaused      = false;
+  s4BootActive    = true;
+  showNextBootLine();
 }
 
 // ---- Show prompt lines then input ----
@@ -252,6 +300,7 @@ function submitPassword() {
 function startTerminalGlitch() {
   function doGlitch() {
     if (window.GOVNET.currentStage !== 4) return scheduleGlitch();
+    if (window.GOVNET.paused) return scheduleGlitch();
     const terminal = document.getElementById('s4-terminal');
     if (terminal) {
       terminal.style.filter = 'hue-rotate(90deg) brightness(1.3)';

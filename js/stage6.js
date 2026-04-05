@@ -12,6 +12,45 @@ let droneLfo = null;
 let droneMasterGain = null;
 let noiseInterval = null;
 
+/* ---- Stage 6 Pause / Resume ---- */
+let s6PauseTime       = null;  // Date.now() when paused
+let s6ElapsedBeforePause = 0;  // ms into the 100s transition timer
+let s6TransitionTotal = 100000; // mirrors the setTimeout value
+
+window.pauseStage6 = function () {
+  // 1. Freeze the CSS credits scroll
+  const el = document.getElementById('s6-credits-scroll');
+  if (el) el.style.animationPlayState = 'paused';
+
+  // 2. Freeze the auto-transition timer
+  if (s6TransitionTimeout) {
+    clearTimeout(s6TransitionTimeout);
+    s6TransitionTimeout = null;
+  }
+  s6PauseTime = Date.now();
+  s6ElapsedBeforePause += s6PauseTime - (window._s6EntryTime || s6PauseTime);
+};
+
+window.resumeStage6 = function () {
+  // 1. Resume CSS credits scroll from same position
+  const el = document.getElementById('s6-credits-scroll');
+  if (el) el.style.animationPlayState = 'running';
+
+  // 2. Restart transition timer with remaining time
+  const remaining = s6TransitionTotal - s6ElapsedBeforePause;
+  window._s6EntryTime = Date.now();
+  s6PauseTime = null;
+
+  if (remaining > 0) {
+    s6TransitionTimeout = setTimeout(() => {
+      triggerStage7Glitch();
+    }, remaining);
+  } else {
+    triggerStage7Glitch();
+  }
+};
+
+
 // ---- Web Audio API Drone ----
 function initDrone() {
   try {
@@ -60,6 +99,7 @@ function initDrone() {
 function scheduleNoiseBursts() {
   function burst() {
     if (window.GOVNET.currentStage !== 6) return;
+    if (window.GOVNET.paused) { const next = 12000 + Math.random() * 8000; noiseInterval = setTimeout(burst, next); return; }
     try {
       playNoiseBurst();
     } catch (e) {}
@@ -188,11 +228,16 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
   if (detail.stage === 6) {
     initDrone();
 
-    // The "instant glitch" will now trigger at the 100s mark, 
+    // Record entry time for pause accounting
+    window._s6EntryTime  = Date.now();
+    s6ElapsedBeforePause = 0;
+    s6PauseTime          = null;
+
+    // The "instant glitch" triggers at the 100s mark,
     // aligned with the branding block during the slower 110s scroll.
     s6TransitionTimeout = setTimeout(() => {
       triggerStage7Glitch();
-    }, 100000);
+    }, s6TransitionTotal);
   } else {
     // Cleanup Stage 6
     if (s6TransitionTimeout) {
@@ -203,5 +248,9 @@ document.addEventListener('govnet:stageEnter', ({ detail }) => {
       clearTimeout(noiseInterval);
       noiseInterval = null;
     }
+    // Reset pause state
+    s6ElapsedBeforePause = 0;
+    s6PauseTime          = null;
+    window._s6EntryTime  = null;
   }
 });

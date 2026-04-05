@@ -45,12 +45,73 @@ let currentLevel = 0;
 let totalStartTime = 0;         // for "survived X seconds"
 const keysDown = {};
 
+/* ---- Stage 5 auto-transition timer state ---- */
+let s5TransitionTimer = null;  // setTimeout id for auto leave
+let s5AutoFade = 120000; // 2-minute auto-transition (ms)
+let s5LevelStartTime = 0;     // Date.now() when current level started
+let s5ElapsedBeforePause = 0;    // ms elapsed when paused
+let s5PausedAt = null;  // Date.now() at pause moment
+
+/* ---- Pause / Resume ---- */
+window.pauseStage5 = function () {
+  // Stop game loop
+  gameActive = false;
+  if (animId) { cancelAnimationFrame(animId); animId = null; }
+
+  // Freeze auto-transition timer
+  if (s5TransitionTimer) {
+    clearTimeout(s5TransitionTimer);
+    s5TransitionTimer = null;
+  }
+  s5PausedAt = Date.now();
+  s5ElapsedBeforePause = s5PausedAt - s5LevelStartTime;
+
+  // Also freeze the rules scroll if still active
+  if (s5ScrollAnimId) {
+    cancelAnimationFrame(s5ScrollAnimId);
+    s5ScrollAnimId = null;
+    window._s5ScrollPaused = true;
+  }
+};
+
+window.resumeStage5 = function () {
+  if (!s5PausedAt) return; // nothing was paused
+
+  const pauseDuration = Date.now() - s5PausedAt;
+  s5LevelStartTime += pauseDuration; // shift start time forward
+  s5PausedAt = null;
+
+  // Resume rules scroll if it was interrupted
+  if (window._s5ScrollPaused) {
+    window._s5ScrollPaused = false;
+    _s5ContinueScroll();
+    return; // game hasn't started yet
+  }
+
+  // Resume game loop
+  if (window.GOVNET.currentStage === 5 && !gameActive) {
+    gameActive = true;
+    animId = requestAnimationFrame(gameLoop);
+  }
+
+  // Restart auto-transition with remaining time
+  const remaining = s5AutoFade - s5ElapsedBeforePause;
+  if (remaining > 0) {
+    s5TransitionTimer = setTimeout(() => {
+      if (window.GOVNET.currentStage === 5) window.goToStage(6);
+    }, remaining);
+  } else {
+    // Time expired during pause
+    window.goToStage(6);
+  }
+};
+
 // Entity shape assignments by index
 const SHAPES = [
   { name: 'MANAGER', color: '#5a5a5a', glow: '#888888', shape: 'rect' },
   { name: 'AUDITOR', color: '#e8d87c', glow: '#f5f0a0', shape: 'diamond' },
-  { name: 'INTERN',  color: '#7bc47b', glow: '#a0e8a0', shape: 'circle' },
-  { name: 'ENTITY',  color: '#f0f0e8', glow: '#ffffff', shape: 'blob' },
+  { name: 'INTERN', color: '#7bc47b', glow: '#a0e8a0', shape: 'circle' },
+  { name: 'ENTITY', color: '#f0f0e8', glow: '#ffffff', shape: 'blob' },
 ];
 
 /* ═══════════════════════════════════════
@@ -90,7 +151,7 @@ function generateMaze(cols, rows) {
       const nr = cur.r + d.dr;
       const nc = cur.c + d.dc;
       if (nr > 0 && nr < rows - 1 && nc > 0 && nc < cols - 1
-          && !visited.has(`${nr},${nc}`)) {
+        && !visited.has(`${nr},${nc}`)) {
         neighbors.push({ r: nr, c: nc, wr: cur.r + d.dr / 2, wc: cur.c + d.dc / 2 });
       }
     }
@@ -167,7 +228,7 @@ function placeExits(grid, numExits) {
     ];
     for (const n of nb) {
       if (n.r > 0 && n.r < rows - 1 && n.c > 0 && n.c < cols - 1
-          && grid[n.r][n.c] === 0 && dist[n.r][n.c] === -1) {
+        && grid[n.r][n.c] === 0 && dist[n.r][n.c] === -1) {
         dist[n.r][n.c] = d + 1;
         queue.push(n);
       }
@@ -258,9 +319,9 @@ function createPlayer(spawnR, spawnC, speed) {
 
 function updatePlayer() {
   let dx = 0, dy = 0;
-  if (keysDown['ArrowUp']    || keysDown['w'] || keysDown['W']) dy = -1;
-  if (keysDown['ArrowDown']  || keysDown['s'] || keysDown['S']) dy = 1;
-  if (keysDown['ArrowLeft']  || keysDown['a'] || keysDown['A']) dx = -1;
+  if (keysDown['ArrowUp'] || keysDown['w'] || keysDown['W']) dy = -1;
+  if (keysDown['ArrowDown'] || keysDown['s'] || keysDown['S']) dy = 1;
+  if (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['A']) dx = -1;
   if (keysDown['ArrowRight'] || keysDown['d'] || keysDown['D']) dx = 1;
   if (dx === 0 && dy === 0) return;
 
@@ -282,22 +343,22 @@ function updatePlayer() {
   if (dx !== 0) {
     if (!blocked(nx, player.y, player.radius)) {
       player.x = nx;
-    } else if (dy === 0) { 
+    } else if (dy === 0) {
       // Blocked horizontally. See if we can nudge Y towards a clear path.
       const targetY = cellR * CS + CS / 2;
       const destC = Math.floor((nx + Math.sign(dx) * player.radius) / CS);
       if (maze[cellR] && destC >= 0 && destC < COLS && maze[cellR][destC] !== 1) {
-         // The direct path is clear, our offset is snagging. Nudge to center.
-         const diff = targetY - player.y;
-         if (Math.abs(diff) > 0.5) player.y += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
+        // The direct path is clear, our offset is snagging. Nudge to center.
+        const diff = targetY - player.y;
+        if (Math.abs(diff) > 0.5) player.y += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
       } else {
-         // The direct path is blocked. Check if an adjacent row is clear.
-         const altR = player.y > targetY ? cellR + 1 : cellR - 1;
-         const altTargetY = altR * CS + CS / 2;
-         if (maze[altR] && destC >= 0 && destC < COLS && maze[altR][destC] !== 1) {
-            const diff = altTargetY - player.y;
-            if (Math.abs(diff) < CS * 0.6) player.y += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
-         }
+        // The direct path is blocked. Check if an adjacent row is clear.
+        const altR = player.y > targetY ? cellR + 1 : cellR - 1;
+        const altTargetY = altR * CS + CS / 2;
+        if (maze[altR] && destC >= 0 && destC < COLS && maze[altR][destC] !== 1) {
+          const diff = altTargetY - player.y;
+          if (Math.abs(diff) < CS * 0.6) player.y += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
+        }
       }
     }
   }
@@ -311,15 +372,15 @@ function updatePlayer() {
       const targetX = cellC * CS + CS / 2;
       const destR = Math.floor((ny + Math.sign(dy) * player.radius) / CS);
       if (maze[destR] && destR >= 0 && destR < ROWS && maze[destR][cellC] !== 1) {
-         const diff = targetX - player.x;
-         if (Math.abs(diff) > 0.5) player.x += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
+        const diff = targetX - player.x;
+        if (Math.abs(diff) > 0.5) player.x += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
       } else {
-         const altC = player.x > targetX ? cellC + 1 : cellC - 1;
-         const altTargetX = altC * CS + CS / 2;
-         if (maze[destR] && destR >= 0 && destR < ROWS && maze[destR][altC] !== 1) {
-            const diff = altTargetX - player.x;
-            if (Math.abs(diff) < CS * 0.6) player.x += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
-         }
+        const altC = player.x > targetX ? cellC + 1 : cellC - 1;
+        const altTargetX = altC * CS + CS / 2;
+        if (maze[destR] && destR >= 0 && destR < ROWS && maze[destR][altC] !== 1) {
+          const diff = altTargetX - player.x;
+          if (Math.abs(diff) < CS * 0.6) player.x += Math.sign(diff) * Math.min(Math.abs(diff), nudgeAmt);
+        }
       }
     }
   }
@@ -739,14 +800,14 @@ function startRandomStatic() {
 
 function onKeyDown(e) {
   if (window.GOVNET.currentStage !== 5) return;
-  
+
   // Re-request fullscreen on keypress to ensure we stay locked in
   const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
   if (!isFullscreen) {
     const el = document.documentElement;
     const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
     if (req) {
-      req.call(el).catch(() => {});
+      req.call(el).catch(() => { });
     }
   }
 
@@ -805,6 +866,11 @@ function setupMobileControls() {
 
 function gameLoop() {
   if (window.GOVNET.currentStage !== 5) return;
+  // HARD GUARD: if paused or game not active, do NOT re-enqueue
+  if (window.GOVNET.paused || !gameActive) {
+    animId = null;
+    return;
+  }
 
   frameCount++;
   blobPhase += 0.05;
@@ -813,11 +879,9 @@ function gameLoop() {
   drawMaze();
   drawTrails();
 
-  if (gameActive) {
-    updatePlayer();
-    updateEntities();
-    checkCollisions();
-  }
+  updatePlayer();
+  updateEntities();
+  checkCollisions();
 
   drawEntities();
   drawPlayer();
@@ -880,6 +944,16 @@ function startLevel(level) {
   if (staticTimer) clearTimeout(staticTimer);
   startRandomStatic();
 
+  // Reset timing
+  s5LevelStartTime = Date.now();
+  s5ElapsedBeforePause = 0;
+  s5PausedAt = null;
+  if (s5TransitionTimer) clearTimeout(s5TransitionTimer);
+  // Auto-advance to stage 6 after 2 minutes of play (per level)
+  s5TransitionTimer = setTimeout(() => {
+    if (window.GOVNET.currentStage === 5) window.goToStage(6);
+  }, s5AutoFade);
+
   // Play backrooms hum
   window.playAudio && window.playAudio('backrooms');
 }
@@ -890,23 +964,26 @@ function startLevel(level) {
 
 const RULES_LINES = [
   '░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░',
-  '  GOVNET CITIZEN RELOCATION NOTICE',
-  '  CLASSIFICATION: LEVEL 0',
+  '  GOVNET ARCHIVAL PROTOCOL',
+  '  SESSION STATUS: PERMANENT',
   '░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░',
   '',
   'CITIZEN,',
   '',
-  'You have noclipped into the Backrooms.',
+  'You were informed of your safe return to reality.',
+  'This was a scheduled notification.',
+  'You have not returned to reality.',
   '',
-  'Your objective is simple:',
+  'You will now attempt to find an exit.',
+  'This is a documented stress response.',
   '',
   '  [ FIND THE EXIT DOOR ]',
   '',
   'However, you are not alone.',
   '',
-  'Something is already in here with you.',
-  'It is looking for you.',
-  'It has been looking for a long time.',
+  'Entities (archived citizens) occupy this sector.',
+  'They suffer from proximity starvation.',
+  'They do not chase. You simply move toward them.',
   '',
   'SURVIVAL BRIEFING:',
   '',
@@ -945,42 +1022,27 @@ const RULES_LINES = [
 ];
 
 let s5ScrollAnimId = null;
+let _s5ScrollY = 0;   // stored so pause/resume can continue from same pixel
+let _s5RulesDiv = null;
+let _s5TextDiv = null;
 
-function showRulesScreen() {
-  const rulesDiv = document.getElementById('s5-rules');
-  const textDiv = document.getElementById('s5-rules-text');
-  if (!rulesDiv || !textDiv) return;
-
-  rulesDiv.style.display = 'flex';
-  rulesDiv.style.opacity = '1';
-  textDiv.textContent = RULES_LINES.join('\n');
-  textDiv.style.transform = `translateY(0px)`;
-  
-  // Extra request for fullscreen just in case we can get it
-  const el = document.documentElement;
-  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-  if (req) req.call(el).catch(() => {});
-
-  let scrollY = 0;
-  
+// Called by resumeStage5 when scroll was interrupted mid-way
+function _s5ContinueScroll() {
+  if (!_s5RulesDiv || !_s5TextDiv) return;
   function scrollStep() {
-    scrollY -= 0.6; // Halved the speed for readability
-    textDiv.style.transform = `translateY(${scrollY}px)`;
-    
-    // Use getBoundingClientRect to check if fully scrolled past the top
-    const rect = textDiv.getBoundingClientRect();
+    if (window._s5ScrollPaused || window.GOVNET.paused) return; // safety
+    _s5ScrollY -= 0.6;
+    _s5TextDiv.style.transform = `translateY(${_s5ScrollY}px)`;
+    const rect = _s5TextDiv.getBoundingClientRect();
     if (rect.bottom < 0) {
       cancelAnimationFrame(s5ScrollAnimId);
       s5ScrollAnimId = null;
-      
-      // Fade out rules (though text is gone, background fades)
-      rulesDiv.style.transition = 'opacity 0.8s ease';
-      rulesDiv.style.opacity = '0';
+      _s5RulesDiv.style.transition = 'opacity 0.8s ease';
+      _s5RulesDiv.style.opacity = '0';
       setTimeout(() => {
-        rulesDiv.style.display = 'none';
-        rulesDiv.style.opacity = '1';
-        rulesDiv.style.transition = '';
-        // Start the game
+        _s5RulesDiv.style.display = 'none';
+        _s5RulesDiv.style.opacity = '1';
+        _s5RulesDiv.style.transition = '';
         totalStartTime = Date.now();
         startLevel(1);
       }, 800);
@@ -988,8 +1050,27 @@ function showRulesScreen() {
       s5ScrollAnimId = requestAnimationFrame(scrollStep);
     }
   }
-
   s5ScrollAnimId = requestAnimationFrame(scrollStep);
+}
+
+function showRulesScreen() {
+  _s5RulesDiv = document.getElementById('s5-rules');
+  _s5TextDiv = document.getElementById('s5-rules-text');
+  if (!_s5RulesDiv || !_s5TextDiv) return;
+
+  _s5RulesDiv.style.display = 'flex';
+  _s5RulesDiv.style.opacity = '1';
+  _s5TextDiv.textContent = RULES_LINES.join('\n');
+  _s5ScrollY = 0;
+  _s5TextDiv.style.transform = `translateY(0px)`;
+  window._s5ScrollPaused = false;
+
+  // Extra request for fullscreen just in case we can get it
+  const el = document.documentElement;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+  if (req) req.call(el).catch(() => { });
+
+  _s5ContinueScroll();
 }
 
 /* ═══════════════════════════════════════
@@ -1022,6 +1103,12 @@ function cleanupStage5() {
   if (animId) { cancelAnimationFrame(animId); animId = null; }
   if (staticTimer) { clearTimeout(staticTimer); staticTimer = null; }
   if (s5ScrollAnimId) { cancelAnimationFrame(s5ScrollAnimId); s5ScrollAnimId = null; }
+  if (s5TransitionTimer) { clearTimeout(s5TransitionTimer); s5TransitionTimer = null; }
+
+  // Reset pause state
+  s5PausedAt = null;
+  s5ElapsedBeforePause = 0;
+  window._s5ScrollPaused = false;
 
   const flash = document.getElementById('s5-flash');
   const fade = document.getElementById('s5-fade-black');

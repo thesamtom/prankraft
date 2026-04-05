@@ -192,6 +192,9 @@ function animate() {
   rafId = requestAnimationFrame(animate);
   if (!isActive) return;
 
+  // IF PAUSED BY TRAP OR ESCAPE: Freeze camera rotation
+  if (window.TRAP_PAUSED) return;
+
   // Smooth camera lerp
   currentRotY += (targetRotY - currentRotY) * 0.035;
   currentRotX += (targetRotX - currentRotX) * 0.035;

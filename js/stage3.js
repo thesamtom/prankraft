@@ -36,35 +36,96 @@ const entityTexts = [
   'DONT LOOK', 'STAY STILL', 'ALWAYS WATCHING', 'ENTITY_DETECTED',
 ];
 
-// ---- Reveal lines one by one ----
+/* ---- Pause / Resume state ---- */
+let s3PauseTimeout = null;   // active timeout ID (one at a time via sequential scheduling)
+let s3CurrentLineIndex = 0;  // next line index to reveal
+let s3IsPaused = false;
+let s3RevealActive = false;  // true when sequencer is running
+let s3SpanElements = [];     // pre-created span elements in order
+
+/** Clears the current pending timeout, freezing the sequencer. */
+window.pauseStage3 = function () {
+  s3IsPaused = true;
+  if (s3PauseTimeout !== null) {
+    clearTimeout(s3PauseTimeout);
+    s3PauseTimeout = null;
+  }
+};
+
+/** Resumes the sequencer from the line it stopped at. */
+window.resumeStage3 = function () {
+  if (!s3IsPaused) return;
+  s3IsPaused = false;
+  if (s3RevealActive) {
+    revealNextLine();
+  }
+};
+
+// ---- Sequential line reveal (one timeout at a time so it's cancellable) ----
+function revealNextLine() {
+  if (s3IsPaused) return;
+  if (window.GOVNET.currentStage !== 3) return;
+
+  if (s3CurrentLineIndex >= stage3Lines.length) {
+    // All lines done — show button
+    s3PauseTimeout = setTimeout(() => {
+      s3PauseTimeout = null;
+      if (window.GOVNET.currentStage !== 3 || s3IsPaused) return;
+      const btn = document.getElementById('s3-terminal-btn');
+      if (btn) {
+        btn.style.display = 'inline-block';
+        window.playAudio && window.playAudio('chime');
+      }
+    }, 1200);
+    return;
+  }
+
+  const lineData  = stage3Lines[s3CurrentLineIndex];
+  const span      = s3SpanElements[s3CurrentLineIndex];
+
+  // The original design used absolute delays from entry; here we convert
+  // them into relative gaps between consecutive lines.
+  let gap;
+  if (s3CurrentLineIndex === 0) {
+    gap = lineData.delay; // first line: delay from stage entry
+  } else {
+    gap = lineData.delay - stage3Lines[s3CurrentLineIndex - 1].delay;
+  }
+  gap = Math.max(gap, 0);
+
+  s3PauseTimeout = setTimeout(() => {
+    s3PauseTimeout = null;
+    if (s3IsPaused) return;
+    if (window.GOVNET.currentStage !== 3) return;
+
+    span.classList.add('visible');
+    window.playAudio && window.playAudio('type');
+
+    s3CurrentLineIndex++;
+    revealNextLine(); // chain to next line
+  }, gap);
+}
+
 function revealLines() {
   const container = document.getElementById('s3-lines-container');
   if (!container) return;
   container.innerHTML = '';
+  s3SpanElements = [];
+  s3CurrentLineIndex = 0;
+  s3IsPaused = false;
+  s3RevealActive = true;
+  s3PauseTimeout = null;
 
-  stage3Lines.forEach(({ text, cls, delay }) => {
+  // Pre-create all span elements (hidden), then start sequencer
+  stage3Lines.forEach(({ text, cls }) => {
     const span = document.createElement('span');
     span.className = `s3-line ${cls}`;
-    span.textContent = text || '\u00A0'; // non-breaking space for blank lines
+    span.textContent = text || '\u00A0';
     container.appendChild(span);
-
-    setTimeout(() => {
-      if (window.GOVNET.currentStage !== 3) return;
-      span.classList.add('visible');
-      window.playAudio && window.playAudio('type');
-    }, delay);
+    s3SpanElements.push(span);
   });
 
-  // Show button after all lines
-  const lastDelay = stage3Lines[stage3Lines.length - 1].delay;
-  setTimeout(() => {
-    if (window.GOVNET.currentStage !== 3) return;
-    const btn = document.getElementById('s3-terminal-btn');
-    if (btn) {
-      btn.style.display = 'inline-block';
-      window.playAudio && window.playAudio('chime');
-    }
-  }, lastDelay + 1200);
+  revealNextLine();
 }
 
 // ---- Random entity text in corners ----
@@ -73,6 +134,7 @@ function startEntityFlashes() {
 
   function flashEntity() {
     if (window.GOVNET.currentStage !== 3) return;
+    if (window.GOVNET.paused) { scheduleEntity(); return; }
 
     const id = corners[Math.floor(Math.random() * corners.length)];
     const el = document.getElementById(id);
@@ -95,7 +157,6 @@ function startEntityFlashes() {
     setTimeout(flashEntity, delay);
   }
 
-  // Start after a few seconds
   setTimeout(scheduleEntity, 8000);
 }
 
@@ -103,6 +164,7 @@ function startEntityFlashes() {
 function startBlackFlashes() {
   function doFlash() {
     if (window.GOVNET.currentStage !== 3) return scheduleFlash();
+    if (window.GOVNET.paused) return scheduleFlash();
     if (Math.random() < 0.4) {
       const overlay = document.getElementById('flash-overlay');
       overlay.className = 'black';
